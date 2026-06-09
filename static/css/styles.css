@@ -1,0 +1,33 @@
+
+/* -- Styles Globais -- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: 'Funnel Display', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+
+/* -- Aside -- */
+.layout-has-sidebar {
+    --sidebar-width: 288px;
+}
+
+#sidebar {
+    top: var(--header-height) ;
+    height: calc(95vh - var(--header-height)) ;
+    width: 288px ;
+    min-width: 180px ;
+    max-width: 288px ;
+    overflow: visible !important;
+}
+
+/* -- backgrounds collors -- */
+.bg-grey {
+    background-color: #E0E0E0;
+}
+
+.bg-grey-2 {
+    background-color: #3D3D3D;
+}
