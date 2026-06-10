@@ -16,7 +16,7 @@ class LoginRepository extends Database{
     {
         try {
             $stmt = $this->mysqlConnection->prepare(
-                "SELECT * FROM users WHERE email_user = ? LIMIT 1"
+                "SELECT * FROM usuarios WHERE email = ? LIMIT 1"
             );
 
             $stmt->execute([$email]);
@@ -26,7 +26,7 @@ class LoginRepository extends Database{
             if ($resultado === false) {
                 return null;
             }
-            if (empty($resultado['password_user']) || !password_verify($password, $resultado['password_user']) ) {
+            if (empty($resultado['password_hash']) || !password_verify($password, $resultado['password_hash']) ) {
                 return null;
             }
 

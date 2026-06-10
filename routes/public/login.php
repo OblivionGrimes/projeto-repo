@@ -20,12 +20,12 @@
                 exit();
                 
             }else{
-                echo $config->alerta_toast("Sua conta foi desativada, solicite a reativação para acessar sua conta!",2);
+                $config->alerta_toast("Sua conta foi desativada, solicite a reativação para acessar sua conta!",2);
                 $LoginRepository->logUsuario($_SESSION['logged_user']->getIdUser(), $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], "Tentativa de login por user desativado");
             }
 
         }else{
-            echo $config->alerta_toast("Email ou Senha incorretos!",2);
+            $config->alerta_toast("Email ou Senha incorretos!",2);
         }
     }
 
@@ -40,13 +40,13 @@
         <div class="mb-7.5 text-center">
             <div class="mx-auto mb-4 flex size-16 items-center justify-center rounded-full shadow-lg bg-major-2">
                 <img
-                    src="<?= BASE_URL ?>static/img/barbearia.png"
+                    src="<?= BASE_URL ?>static/img/#"
                     alt="Logo"
                     class="size-8"
                 >
             </div>
 
-            <h1 class="mb-2 text-2xl font-semibold text-mono text-shadow">Barber Shop</h1>
+            <h1 class="mb-2 text-2xl font-semibold text-mono text-shadow">projeto repo</h1>
             <p class="text-sm text-muted-foreground text-shadow">Insira suas credenciais para acessar</p>
         </div>
 
@@ -55,7 +55,7 @@
         <!-- Usuário -->
         <div class="mb-5">
             <label class="mb-2.5 flex items-center gap-2 text-sm font-medium text-foreground">
-                <svg class="size-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="size-4 text-muted-foreground" xmlns="#svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
                 </svg>
                 Email
@@ -76,7 +76,7 @@
         <div class="mb-7.5">
             <div class="mb-2.5 flex items-center justify-between">
                 <label class="flex items-center gap-2 text-sm font-medium text-foreground">
-                    <svg class="size-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="size-4 text-muted-foreground" xmlns="#svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     Senha
@@ -114,7 +114,7 @@
         </div>
 
         <div class="text-center">
-            <span class="text-xs text-muted-foreground">© <?= date('Y') ?> THE · Gestão Inteligente</span>
+            <span class="text-xs text-muted-foreground">© <?= date('Y') ?> PROJETO · repo</span>
         </div>
     </div>
 </div>

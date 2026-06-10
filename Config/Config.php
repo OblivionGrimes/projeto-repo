@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-define('BASE_URL', 'http://localhost/barber_shop/');
+define('BASE_URL', 'http://localhost/Projeto-Repo/');
 
 class Config {
 

@@ -17,11 +17,11 @@ class User {
 
         if ($data) {
             $this->id_user = $data['id_user'] ?? null;
-            $this->name = $data['name_user'] ?? null;
-            $this->email = $data['email_user'] ?? null;
-            $this->telefone = $data['phonenumber_user'] ?? null;
-            $this->tipo = $data['type_user'] ?? null;
-            $this->status = $data['status_user'] ?? null;
+            $this->name = $data['username'] ?? null;
+            $this->email = $data['email'] ?? null;
+            $this->telefone = $data['telefone'] ?? null;
+            $this->tipo = $data['tipo'] ?? null;
+            $this->status = $data['status'] ?? null;
             $this->unique_id = $data['unique_id'] ?? null;
         }
     }
