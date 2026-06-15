@@ -1,5 +1,17 @@
+/* ============================================
+   VARIÁVEIS GLOBAIS E ESTILOS BASE
+   ============================================ */
 
-/* -- Styles Globais -- */
+:root {
+    --header-height: 70px;
+    /*--sidebar-width: 180px;*/
+}
+
+/* talvez não use mais */
+.layout-has-sidebar {
+    --sidebar-width: 288px;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -9,10 +21,9 @@ html, body {
 }
 
 
-/* -- Aside -- */
-.layout-has-sidebar {
-    --sidebar-width: 288px;
-}
+/* ============================================
+   LAYOUT FIXO DO HEADER E SIDEBAR
+   ============================================ */
 
 #sidebar {
     top: var(--header-height) ;
@@ -21,13 +32,258 @@ html, body {
     min-width: 180px ;
     max-width: 288px ;
     overflow: visible !important;
+    
 }
 
-/* -- backgrounds collors -- */
-.bg-grey {
-    background-color: #E0E0E0;
+.layout-has-sidebar main, 
+.layout-has-sidebar .wrapper { 
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
 }
 
-.bg-grey-2 {
-    background-color: #3D3D3D;
+.flex-1.overflow-y-auto {
+    overflow-x: hidden;
+}
+
+
+main {
+    padding-top: var(--header-height) ;
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 50;
+}
+
+/* ============================================
+   UTILITÁRIOS DE POSICIONAMENTO
+   ============================================ */
+
+.relative {
+    position: relative;
+}
+
+.z-10 {
+    z-index: 10;
+}
+
+.z-40 {
+    z-index: 40;
+}
+
+.z-100 {
+    z-index: 100;
+}
+
+.z-1000 {
+    z-index: 1000 ;
+}
+
+.bg-red-50, .bg-blue-50 {
+    margin-top: calc(var(--header-height) + 1rem) ;
+}
+
+/* ============================================
+   OVERLAY DE FUNDO LOGIN (tentar fazer lembrando a logo ao fundo tambem?)
+   ============================================ */
+.bg-dark-overlay {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(251, 200, 137, 0.10),
+            transparent 40%
+        ),
+
+        radial-gradient(
+            circle at bottom left,
+            rgba(60, 109, 159, 0.18),
+            transparent 45%
+        ),
+
+        radial-gradient(
+            circle at center,
+            rgba(15, 23, 42, 0.85),
+            rgba(10, 12, 20, 0.95)
+        ),
+
+        linear-gradient(
+            135deg,
+            #0F172A,
+            #12131F,
+            #0A0C14
+        );
+}
+
+/* ============================================
+   CORES BASE
+   ============================================ */
+.major-1 {
+    color: #D9C8B7;
+}
+
+.bg-major-1 {
+    background-color: #D9C8B7;
+}
+
+.major-2 {
+    color: #0F172A;
+}
+
+.bg-major-2 {
+    background-color: #0F172A;
+}
+
+.alvorecer-2 {
+    color: #3C6D9F;
+}
+
+.night-5 {
+    color: #0A0C14;
+}
+
+.clound-1 {
+    color: #F5F6FA;
+}
+
+.bg-clound-1 {
+    background-color: #F5F6FA;
+}
+
+.clound-2 {
+    color: #DDDEEB;
+}
+
+.bg-clound-2 {
+    background-color: #DDDEEB;
+}
+
+/* ============================================
+   BOTÃO (deixa os botões com tons do projeto)
+   ============================================ */
+.menu-button.permissions {
+    color: #0F172A;
+    background-color: #D9C8B7;
+}
+
+.menu-button.permissions:hover {
+    color: #D9C8B7;
+    background-color: #0F172A;
+}
+
+/* ============================================
+   BOTÃO DE SWITCH (para os inputs com o kt-switch)
+   ============================================ */
+.menu-button.switch {
+    appearance: none;
+    background-color: #CBD5E1; 
+    color: #0F172A;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+}
+
+.menu-button.switch:checked {
+    background-color: #D9C8B7; 
+}
+
+.menu-button.switch:hover {
+    filter: brightness(0.9);
+}
+
+/* ============================================
+   ITENS DO EXIT (deixar o botão com tons mais vermelhos)
+   ============================================ */
+.menu-item.logout {
+    color: #DC2626;
+}
+.menu-item.logout:hover { /* sem isso aqui o fundo ta ficando rosado no exit, vai entender */
+    background-color: #FEE2E2;
+}
+.menu-item.logout:hover .menu-icon,
+.menu-item.logout:hover .menu-text {
+    color: #7F1D1D;
+}
+
+/* ============================================
+   ITENS DO HEADER (cores padrão)
+   ============================================ */
+.menu-item {
+    color: #D9C8B7;
+}
+.menu-item:hover {
+    background-color: #D9C8B7;
+}
+.menu-item:hover .menu-icon,
+.menu-item:hover .menu-text {
+    color: #0F172A;
+}
+
+/* ============================================
+   BADGES DE STATUS (status de ativo inativo e etc, utilizei pra substituir os kt-badge)
+   ============================================ */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid transparent;
+    transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.status-active {
+    color: #3C6D9F;                
+    background-color: rgba(60, 109, 159, 0.12);
+    border-color: rgba(60, 109, 159, 0.35);
+}
+
+.status-active:hover {
+    background-color: rgba(60, 109, 159, 0.2);
+}
+
+.status-inactive {
+    color: #E5E7EB;
+    background-color: #2B2D3D;    
+    border-color: #0A0C14;
+}
+
+.status-inactive:hover {
+    filter: brightness(1.15);
+}
+
+/* ============================================
+   TAMANHO DAS TABELAS (altura minima e maxima com scroll)
+   ============================================ */
+.table-normal-size{
+    min-height: 300px;
+    max-height: 520px; 
+    overflow-y: auto;
+}
+
+/* ============================================
+   RESPONSIVIDADE (Parado)
+   ============================================ */
+
+@media (min-width: 1024px) {
+    main {
+        margin-left: var(--sidebar-width);
+        width: calc(100% - var(--sidebar-width));
+    }
+}
+
+@media (max-width: 450px) {
+    .texto-permissao { display: none; }
+}
+
+@media (max-width: 650px) {
+    .link-url { display: none; }
+}
+
+@media (max-width: 650px) {
+    .padding-5 { padding-top: 1.5vh; }
+    .max-height { max-height: 10vh; }
 }

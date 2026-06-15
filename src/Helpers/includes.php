@@ -22,6 +22,15 @@ require_once __DIR__ . '/../../src/Repositories/LoginRepository.php';
 use src\Repositories\LoginRepository;
 $LoginRepository = new LoginRepository();
 
+require_once __DIR__ . '/../../src/Repositories/PermissionRepository.php';
+use src\Repositories\PermissionRepository;
+$PermissionRepository = new PermissionRepository();
+
+require_once __DIR__ . '/../../src/Repositories/UserRepository.php';
+use src\Repositories\UserRepository;
+$UserRepository = new UserRepository();
+
+
 
 /* -- MODELOS -- */
 require_once __DIR__ . '/../../src/Models/User.php';

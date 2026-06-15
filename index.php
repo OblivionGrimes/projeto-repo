@@ -15,6 +15,8 @@ $viewToLoad = $router->getFileFromUrl($urlParam);
 
 $isPublicPage = (strpos($viewToLoad, 'routes/public') !== false);
 
+$isIframe = isset($_GET['iframe']);
+
 
 if ($isPublicPage) {
     // =========================
@@ -38,7 +40,9 @@ if ($isPublicPage) {
 
     require_once 'src/Views/head.php';
 
-    //require_once 'src/Views/header.php';
+    if (!$isIframe){
+        require_once 'src/Views/header.php';
+    }
 
     if (file_exists($viewToLoad)) {
         require_once $viewToLoad;
@@ -46,7 +50,9 @@ if ($isPublicPage) {
         require_once 'routes/dashboard/404.php';
     }
 
-    //require_once 'src/Views/footer.php';
+    if (!$isIframe){
+        require_once 'src/Views/footer.php';
+    }
 
     require_once 'src/Views/body.php';
 }
