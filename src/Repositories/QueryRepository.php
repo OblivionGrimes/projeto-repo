@@ -38,7 +38,7 @@ class QueryRepository extends Database
 
     protected function insert (string $table, string $column, string $values){
         
-        $total = count(explode(' ,', $column));
+        $total = count(explode(',', $column));
         $interrogacoes = '';
 
         for ($i = 1; $i <= $total; $i++){
@@ -47,8 +47,7 @@ class QueryRepository extends Database
 
         $interrogacoes = substr($interrogacoes, 1);
 
-        $valuesArray = explode(',', $values);
-        $valuesArray = array_map('trim', $valuesArray);
+        $valuesArray = array_map('trim', explode('|', $values));
 
         $sql = "INSERT INTO ". $table ." ( ". $column ." ) VALUES ( ". $interrogacoes ." )";
 

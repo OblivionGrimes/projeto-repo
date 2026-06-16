@@ -10,13 +10,20 @@ require_once __DIR__ . '/../Repositories/QueryRepository.php';
 use PDO;
 use PDOException;
 
+require_once __DIR__ . '/../../Config/Config.php';
+use Config\Config;
+
+
 class LoginRepository extends QueryRepository{
+
     
     public function autenticarUsuario(string $email, string $password): ?User
     {
+        $config = new Config();
+
         try {
 
-            $email = trim($email);
+            $email = $config->sanitize($email);
 
             $resultado = $this->select('usuarios', '*', "email = {$email}", '', '1');
 
@@ -36,11 +43,16 @@ class LoginRepository extends QueryRepository{
     }
 
     // Invalida a sessão atual e redireciona para a página de login
-    public function logUsuario($user_id, $id_address, $user_agente, $acao): void {
-        
-        $stmt = $this->mysqlConnection->prepare("INSERT INTO logs_acesso (user_id, acao, ip_address, user_agent, data_log) VALUES (?, ?, ?, ?, now())");
-        $stmt->execute([$user_id, $acao, $id_address, $user_agente]);
+    public function logUsuario(int $user_id, string $id_address, string $user_agente, string $acao) {
 
+        try {
+            $stmt = $this->insert('logs_acesso', 'user_id, acao, ip_address, user_agent', "{$user_id}| {$acao}| {$id_address}| {$user_agente}");
+            return $stmt;
+        }
+        catch (PDOException $e) {
+            error_log('Erro ao registrar log de acesso: ' . $e->getMessage());
+        }
+        
     }
 
     // Verifica se o usuário está logado caso contrário, redireciona para a página de login
@@ -53,15 +65,15 @@ class LoginRepository extends QueryRepository{
     }
 
     // Salva o codigo de recuperação no banco de dados
-    public function saveRecoveryCode($email, $codigo){
-        $stmt = $this->mysqlConnection->prepare("INSERT INTO recovery_keys (key_recover, email, create_at) values (?, ?, now())");
+    public function saveRecoveryCode(string $email, int $codigo){
+        $stmt = $this->mysqlConnection->prepare("INSERT INTO recovery_keys (key_recover, email) values (?, ?)");
         $stmt->execute([$codigo, $email]);
 
         return $stmt->rowCount() > 0;
     }
 
     // Verifica se o codigo de recuperação é válido
-    public function verifyRecoveryCode($codigo){
+    public function verifyRecoveryCode(int $codigo){
         $stmt = $this->mysqlConnection->prepare("SELECT * FROM recovery_keys WHERE key_recover = ? AND create_at >= NOW() - INTERVAL 15 MINUTE ORDER BY create_at DESC LIMIT 1");
         $stmt->execute([$codigo]);
 
