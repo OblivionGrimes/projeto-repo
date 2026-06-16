@@ -2,26 +2,23 @@
 
 namespace src\Repositories;
 
-use src\Core\Database;
+//use src\Core\Database;
 use src\Models\User;
 
 
-require_once __DIR__ . '/../Core/Database.php';
+require_once __DIR__ . '/../Repositories/QueryRepository.php';
 use PDO;
 use PDOException;
 
-class LoginRepository extends Database{
+class LoginRepository extends QueryRepository{
     
     public function autenticarUsuario(string $email, string $password): ?User
     {
         try {
-            $stmt = $this->mysqlConnection->prepare(
-                "SELECT * FROM usuarios WHERE email = ? LIMIT 1"
-            );
 
-            $stmt->execute([$email]);
+            $email = trim($email);
 
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $resultado = $this->select('usuarios', '*', "email = {$email}", '', '1');
 
             if ($resultado === false) {
                 return null;

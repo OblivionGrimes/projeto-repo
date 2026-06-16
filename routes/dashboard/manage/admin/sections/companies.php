@@ -32,8 +32,8 @@
 
                 <div class="flex items-center gap-2">
 
-                    <!-- button do modal de criação do frame -->
-                    <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/companies/index?iframe=companies", "Criar Frame", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Criar painel") ?>
+                    <!-- button do modal de criação do companies-->
+                    <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/companies/index?iframe=companies", "Adicionar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar cliente") ?>
 
                     <button
                         type="button"

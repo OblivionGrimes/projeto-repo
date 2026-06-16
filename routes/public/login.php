@@ -9,6 +9,8 @@
 
         $user = $LoginRepository->autenticarUsuario($email, $password);
 
+        var_dump($user);
+
         if (!empty($user)) {
 
             $_SESSION['logged_user'] = $user; 

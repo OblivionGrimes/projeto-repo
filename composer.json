@@ -1,8 +1,8 @@
 {
-    "name": "mathe/barber_shop",
+    "name": "mathe/projeto-repo",
     "autoload": {
         "psr-4": {
-            "Mathe\\BarberShop\\": "src/"
+            "Mathe\\ProjetoRepo\\": "src/"
         }
     },
     "authors": [
