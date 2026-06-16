@@ -65,11 +65,16 @@ class LoginRepository extends QueryRepository{
     }
 
     // Salva o codigo de recuperação no banco de dados
-    public function saveRecoveryCode(string $email, int $codigo){
-        $stmt = $this->mysqlConnection->prepare("INSERT INTO recovery_keys (key_recover, email) values (?, ?)");
-        $stmt->execute([$codigo, $email]);
+    public function saveRecoveryCode(string $email, int $codigo): bool{
 
-        return $stmt->rowCount() > 0;
+        try{
+
+            $stmt = $this->insert('recovery_keys', 'key_recover, email', "{$codigo}| {$email}");
+            return $stmt;
+
+        }catch (PDOexception $e){
+            error_log('Erro ao salvar o codigo de recuperação: ' . $e->getMessage());
+        }
     }
 
     // Verifica se o codigo de recuperação é válido

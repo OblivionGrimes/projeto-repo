@@ -1,7 +1,6 @@
 
 <?php
 
-
     if (isset($_POST['logar'])) {
 
         $email = $config->sanitize($_POST['email']);
