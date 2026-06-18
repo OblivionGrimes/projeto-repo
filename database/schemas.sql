@@ -32,3 +32,16 @@ CREATE TABLE `logs_acesso` (
   `user_agent` text DEFAULT NULL,
   `data_hora` timestamp NOT NULL DEFAULT current_timestamp()
 ) 
+
+CREATE TABLE `clientes` (
+  `id_cliente` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `numero_cliente` varchar(30) NOT NULL UNIQUE,
+  `nome_cliente` varchar(60) NOT NULL,
+  `contato_cliente` int(11) DEFAULT NULL,
+  `cnpj_cliente` int(11) DEFAULT NULL,
+  `gm_cliente` varchar(5) DEFAULT 'nao',
+  `status_cliente` varchar(15) DEFAULT 'ativo',
+  `unique_id` varchar(36) DEFAULT uuid(),
+  `CREATE_AT` datetime NOT NULL DEFAULT current_timestamp(),
+  `UPDATE_AT` datetime NOT NULL
+)
