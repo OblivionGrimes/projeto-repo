@@ -30,6 +30,9 @@ require_once __DIR__ . '/../../src/Repositories/UserRepository.php';
 use src\Repositories\UserRepository;
 $UserRepository = new UserRepository();
 
+require_once __DIR__ . '/../../src/Repositories/EnterpriseRepository.php';
+use src\Repositories\EnterpriseRepository;
+$EnterpriseRepository = new EnterpriseRepository();
 
 
 /* -- MODELOS -- */

@@ -36,6 +36,8 @@ class QueryRepository extends Database
 
     }
 
+    #-- EX: $this->insert('recovery_keys', 'key_recover, email', "{$codigo}| {$email}")
+
     protected function insert (string $table, string $column, string $values){
         
         $total = count(explode(',', $column));

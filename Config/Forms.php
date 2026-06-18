@@ -23,11 +23,11 @@ class Forms {
         return '<input class="'.$class.'" type="'.$type.'" name="'.$name.'" id="'.$id.'" value="'.$value.'" placeholder="'.$placeholder.'", maxlength="'.$maxlenght.'" '.$requiredAttr.' >';
     }
 
-    public function inputTel (string $type, $name, $id, $value, $pattern, $maxlenght, $class, bool $required = false){
+    public function inputTel (string $type, $name, $id, $value, string $placeholder = '', $pattern, $maxlenght, $class, bool $required = false){
 
         $requiredAttr = $required ? 'required' : '';
 
-        return '<input type="'.$type.'" pattern="'.$pattern.'" maxlength="'.$maxlenght.'" class="'.$class.'" id="'.$id.'" value="'.$value.'" name="'.$name.'" '.$requiredAttr.'>';
+        return '<input type="'.$type.'" pattern="'.$pattern.'" maxlength="'.$maxlenght.'" placeholder="'.$placeholder.'" class="'.$class.'" id="'.$id.'" value="'.$value.'" name="'.$name.'" '.$requiredAttr.'>';
     }
 
     public function inputChecked (string $type ,string $name, string $id, $checked, string $value = '', string $class = '', bool $required = false){

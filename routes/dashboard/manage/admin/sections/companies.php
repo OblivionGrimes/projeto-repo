@@ -33,7 +33,7 @@
                 <div class="flex items-center gap-2">
 
                     <!-- button do modal de criação do companies-->
-                    <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/companies/index?iframe=companies", "Adicionar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar cliente") ?>
+                    <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/index?iframe=customers", "Adicionar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar cliente") ?>
 
                     <button
                         type="button"
@@ -144,7 +144,7 @@
                                                 <input type="hidden" name="unique_id" value="<?= 'teste' ?>">
 
                                                 <!-- button do modal de edição do frame -->
-                                                <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/frames/edit?iframe=frameEdit&frame_unique=".'ativo', "Editar frame", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
+                                                <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/edit?iframe=frameEdit&frame_unique=".'ativo', "Editar frame", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
 
 
                                                 <!-- SWITCH, precisa de dois inputs aqui ja que um é para executar a ação e o outro para o envio do 'name' -->

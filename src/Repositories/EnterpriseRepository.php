@@ -1,13 +1,79 @@
 <?php
 
 namespace src\Repositories;
-
-use src\Core\Database;
 use src\Models\Enterprise;
-use PDO;
 
-class EnterpriseRepository extends Database
+require_once __DIR__ . '/../Repositories/QueryRepository.php';
+use PDO;
+use PDOException;
+
+require_once __DIR__ . '/../../Config/Config.php';
+use Config\Config;
+class EnterpriseRepository extends QueryRepository
 {
+
+        /**
+     * Criar novo cliente
+     */
+    public function createCliente(array $data): ?bool
+    {
+        try {
+
+            $contato = empty($data['contato_cliente']) ? null : $data['contato_cliente'];
+            $cnpj = empty($data['cnpj']) ? null : $data['cnpj'];
+
+            $stmt = $this->insert('clientes', 'numero_cliente, nome_cliente, contato_cliente, cnpj_cliente', "{$data['numero_cliente']}| {$data['nome_cliente']}| {$contato}| {$cnpj}");
+
+            return $stmt;
+
+        } catch (PDOException $e) {
+
+            if ($e->getCode() === '23000') {
+                return null; // algo duplicado
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Editar uma empresa
+     */
+    public function editEnterprise(array $data): ?bool
+    {
+        try {
+            $sql = "update empresas set cnpj = ?, nome = ? where unique_id = ?";
+
+            $stmt = $this->mysqlConnection->prepare($sql);
+
+            return $stmt->execute([
+                $data['cnpj'],
+                $data['nome'],
+                $data['unique_id']
+            ]);
+
+        } catch (\PDOException $e) {
+
+            if ($e->getCode() === '23000') {
+                return null; // CNPJ duplicado
+            }
+
+            throw $e;
+        }
+    }
+
+
+    /**
+     * desativar e ativar empresa
+     */
+    public function desativaEmpresa(string $unique_id, int $change): bool
+    {
+        $status = ($change == 1)? 'ativo' : 'inativo';
+        $sql = "update empresas set status = '".$status."' WHERE unique_id = ? ";
+        $stmt = $this->mysqlConnection->prepare($sql);
+        return $stmt->execute([$unique_id]);
+    }
+
     /**
      * Retorna todas as empresas existentes no sistema
      */
@@ -164,67 +230,5 @@ class EnterpriseRepository extends Database
         }
 
     }      
-    /**
-     * Criar nova empresa
-     */
-    public function createEnterprise(array $data): ?bool
-    {
-        try {
-            $sql = "INSERT INTO empresas (cnpj, nome, data_cadastro)
-                    VALUES (?, ?, NOW())";
 
-            $stmt = $this->mysqlConnection->prepare($sql);
-
-            return $stmt->execute([
-                $data['cnpj'],
-                $data['nome']
-            ]);
-
-        } catch (\PDOException $e) {
-
-            if ($e->getCode() === '23000') {
-                return null; // CNPJ duplicado
-            }
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Editar uma empresa
-     */
-    public function editEnterprise(array $data): ?bool
-    {
-        try {
-            $sql = "update empresas set cnpj = ?, nome = ? where unique_id = ?";
-
-            $stmt = $this->mysqlConnection->prepare($sql);
-
-            return $stmt->execute([
-                $data['cnpj'],
-                $data['nome'],
-                $data['unique_id']
-            ]);
-
-        } catch (\PDOException $e) {
-
-            if ($e->getCode() === '23000') {
-                return null; // CNPJ duplicado
-            }
-
-            throw $e;
-        }
-    }
-
-
-    /**
-     * desativar e ativar empresa
-     */
-    public function desativaEmpresa(string $unique_id, int $change): bool
-    {
-        $status = ($change == 1)? 'ativo' : 'inativo';
-        $sql = "update empresas set status = '".$status."' WHERE unique_id = ? ";
-        $stmt = $this->mysqlConnection->prepare($sql);
-        return $stmt->execute([$unique_id]);
-    }
 }

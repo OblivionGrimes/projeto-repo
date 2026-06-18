@@ -1,7 +1,7 @@
 <?php
 
 namespace src\Models;
-
+/* Alinha com a estrutura da tabela 'clientes' no banco de dados */
 class Enterprise {
 
     private $id_empresa;
