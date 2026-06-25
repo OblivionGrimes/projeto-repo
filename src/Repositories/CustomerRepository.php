@@ -1,7 +1,7 @@
 <?php
 
 namespace src\Repositories;
-use src\Models\Enterprise;
+use src\Models\Customer;
 
 require_once __DIR__ . '/../Repositories/QueryRepository.php';
 use PDO;
@@ -9,18 +9,20 @@ use PDOException;
 
 require_once __DIR__ . '/../../Config/Config.php';
 use Config\Config;
-class EnterpriseRepository extends QueryRepository
+class CustomerRepository extends QueryRepository
 {
 
         /**
      * Criar novo cliente
      */
-    public function createCliente(array $data): ?bool
+    public function createCliente(array $data)
     {
+        $config = new Config();
+
         try {
 
-            $contato = empty($data['contato_cliente']) ? null : $data['contato_cliente'];
-            $cnpj = empty($data['cnpj']) ? null : $data['cnpj'];
+            $contato = empty($data['contato_cliente']) ? null : $config->sanitize($data['contato_cliente']);
+            $cnpj = empty($data['cnpj']) ? null : $config->sanitize($data['cnpj']);
 
             $stmt = $this->insert('clientes', 'numero_cliente, nome_cliente, contato_cliente, cnpj_cliente', "{$data['numero_cliente']}| {$data['nome_cliente']}| {$contato}| {$cnpj}");
 
@@ -86,7 +88,7 @@ class EnterpriseRepository extends QueryRepository
         $empresas = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $empresas[] = new Enterprise($row);
+            $empresas[] = new Customer($row);
         }
 
         return $empresas;
@@ -139,7 +141,7 @@ class EnterpriseRepository extends QueryRepository
         $empresas = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $empresas[] = new Enterprise($row);
+            $empresas[] = new Customer($row);
         }
 
         return $empresas;
@@ -166,7 +168,7 @@ class EnterpriseRepository extends QueryRepository
         $empresas = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $empresas[] = new Enterprise($row);
+            $empresas[] = new Customer($row);
         }
 
         return $empresas;
@@ -190,7 +192,7 @@ class EnterpriseRepository extends QueryRepository
         $empresas = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $empresas[] = new Enterprise($row);
+            $empresas[] = new Customer($row);
         }
 
         return $empresas;

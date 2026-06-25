@@ -30,15 +30,15 @@ require_once __DIR__ . '/../../src/Repositories/UserRepository.php';
 use src\Repositories\UserRepository;
 $UserRepository = new UserRepository();
 
-require_once __DIR__ . '/../../src/Repositories/EnterpriseRepository.php';
-use src\Repositories\EnterpriseRepository;
-$EnterpriseRepository = new EnterpriseRepository();
+require_once __DIR__ . '/../../src/Repositories/CustomerRepository.php';
+use src\Repositories\CustomerRepository;
+$CustomerRepository = new CustomerRepository();
 
 
 /* -- MODELOS -- */
 require_once __DIR__ . '/../../src/Models/User.php';
 
-require_once __DIR__ . '/../../src/Models/Enterprise.php';
+require_once __DIR__ . '/../../src/Models/Customer.php';
 
 
 

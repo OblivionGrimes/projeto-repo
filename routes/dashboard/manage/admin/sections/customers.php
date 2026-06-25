@@ -1,3 +1,10 @@
+<?php
+// criar o table logo, drawer de criar ja esta completo, depois adicionar o de edit
+
+
+?>
+
+
 <section id="section-companies" class="admin-section">
     <div class="col-xl-6 padding-5">
         <div class="kt-card h-100 shadow-md">
