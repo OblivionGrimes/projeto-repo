@@ -79,15 +79,14 @@ class CustomerRepository extends QueryRepository
     /**
      * Retorna todas as empresas existentes no sistema
      */
-    public function getAllEnterprises(): array
+    public function getAllCustomers()
     {
-        $sql = "SELECT * FROM empresas ORDER BY nome ASC";
-        $stmt = $this->mysqlConnection->prepare($sql);
-        $stmt->execute();
+        $sql = "SELECT * FROM clientes ORDER BY nome_cliente ASC";
+        $stmt = $this->select_livre($sql);
 
         $empresas = [];
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        foreach ($stmt as $row) {
             $empresas[] = new Customer($row);
         }
 

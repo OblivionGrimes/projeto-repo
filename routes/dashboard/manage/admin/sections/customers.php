@@ -1,6 +1,6 @@
 <?php
 // criar o table logo, drawer de criar ja esta completo, depois adicionar o de edit
-
+    $customers = $CustomerRepository->getAllCustomers();
 
 ?>
 
@@ -14,7 +14,7 @@
                 <div class="kt-card-title">
                     <h3 class="fw-bold">
                         <i class="ki-outline ki-tablet fs-2 text-primary me-2"></i>
-                        Painéis 
+                        Clientes 
                     </h3>
                 </div>
 
@@ -63,18 +63,19 @@
                     <table class="kt-table table-auto kt-table-border align-middle">
                         <thead>
                             <tr class="text-gray-500 fw-semibold fs-7 text-uppercase">
-                                <th>Nome</th>
-                                <th>URL</th>
-                                <th>Descrição</th>
-                                <th>Empresa</th>
+                                <th>Nº Cliente</th>
+                                <th>Cliente</th>
+                                <th>Contato</th>
+                                <th>CNPJ</th>
                                 <th>Status</th>
                                 <th class="text-end">Ações</th>
                             </tr>
                         </thead>
 
                         <tbody class="fw-semibold text-gray-700" id="frames-table" data-filter-scope>
-                            <!-- Foreach -->
+                            <!-- Foreach aquiiiiiii -->
                                 <?php
+                                    foreach ($customers as $resC):
                                     #$empresa = $EnterpriseRepository->getEnterpriseById($frame->getEmpresaId())[0];
                                     #$empresaId   = $frame->getEmpresaId();
                                     #$empresaNome = $empresa->getNameEmpresa();
@@ -83,62 +84,47 @@
                                 <tr data-empresa-nome="<?= htmlspecialchars('teste') ?>"
                                     data-status="<?= 'Ativo' ?>">
 
-                                    <!-- Nome -->
+                                    <!-- Numero cliente -->
                                     <td>
                                         <span>
-                                            <?= htmlspecialchars('teste') ?>
+                                            <?= $resC->getNumeroCliente() ?>
                                         </span>
                                     </td>
 
-                                    <!-- URL -->
+                                    <!-- nome cliente -->
                                     <td>
-                                        <a href="<?= htmlspecialchars('teste') ?>"
-                                        target="_blank"
-                                        class="text-muted fs-8 text-truncate mw-300px d-inline-block">
+                                        <a class="text-muted fs-8 text-truncate mw-300px d-inline-block">
                                             <i class="ki-outline ki-exit-right-corner fs-4"></i>
                                             <span class="texto-permissao">
-                                                <?= strlen('teste') > 55
-                                                    ? htmlspecialchars(substr('teste', 0, 55)) . '...'
-                                                    : htmlspecialchars('teste') ?>
+                                                <?= ucfirst($resC->getNameCliente()); ?>
                                             </span>
                                         </a>
                                     </td>
 
-                                    <!-- Descrição -->
+                                    <!-- Contato -->
                                     <td>
                                         <span class="text-muted fs-8 text-truncate mw-300px">
-                                            <?= htmlspecialchars('teste') ?>
+                                            <?= $mask->maskTelefone($resC->getContatoCliente()) ?>
                                         </span>
                                     </td>
 
-                                    <!-- Empresa (CLICÁVEL) -->
+                                    <!-- CNPJ -->
                                     <td>
-                                        <button
-                                            type="button"
-                                            class="empresa-filter
-                                                kt-link
-                                                alvorecer-2
-                                                cursor-pointer
-                                                position-relative"
-                                            data-filter-key="empresaNome"
-                                            data-filter-value="<?= htmlspecialchars('teste') ?>"
-                                        >
-                                            <i class="ki-outline ki-switch fs-4"></i>
-                                            <?= ucfirst('teste') ?>
-                                        </button>
+                                        <i class="ki-outline ki-switch fs-4"></i>
+                                        <?= $mask->formatarCnpj($resC->getCnpj()) ?>
                                     </td>
 
                                     <!-- Status -->
-                                    <?php $badgeColor = ('ativo' === 'ativo') ? 'status-active' : 'status-inactive'; ?>
+                                    <?php $badgeColor = ($resC->getStatus() === 'ativo') ? 'status-active' : 'status-inactive'; ?>
 
                                     <td>
                                         <button 
                                             type="button"
                                             class="status-filter status-badge kt-badge-sm uppercase cursor-pointer <?= $badgeColor ?>"
                                             data-filter-key="status"
-                                            data-filter-value="<?= 'ativo' ?>"
+                                            data-filter-value="<?= $resC->getStatus() ?>"
                                         >
-                                            <?= 'ativo' ?>
+                                            <?= $resC->getStatus() ?>
                                         </button>
                                     </td>
 
@@ -184,7 +170,7 @@
                                     </td>
 
                                 </tr>
-                            <!-- endforeach; -->
+                            <?php endforeach; ?>
                         </tbody>
 
                     </table>

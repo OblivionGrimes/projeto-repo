@@ -120,7 +120,7 @@ class QueryRepository extends Database
 
         $stmt = $this->mysqlConnection->prepare($sql);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);    
 
     }
 

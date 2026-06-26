@@ -1,50 +1,54 @@
 <?php
 
 namespace src\Models;
-/* Alinha com a estrutura da tabela 'clientes' no banco de dados */
 class Customer {
 
-    private $id_empresa;
-    private $nome;
-    private $cnpj;
+    private $id_cliente;
+    private $nome_cliente;
+    private $cnpj_cliente;
     private $unique_id;
-    private $status;
-    private $data_cadastro;
+    private $status_cliente;
+    private $gm_cliente;
+    private $numero_cliente;
+    private $contato_cliente;
 
     public function __construct(array $data = []) {
         if ($data) {
-            $this->id_empresa = $data['id_empresa'] ?? null;
-            $this->nome = $data['nome'] ?? null;
-            $this->cnpj = $data['cnpj'] ?? null;
+            $this->id_cliente = $data['id_cliente'] ?? null;
+            $this->nome_cliente = $data['nome_cliente'] ?? null;
+            $this->cnpj_cliente = $data['cnpj_cliente'] ?? null;
             $this->unique_id = $data['unique_id'] ?? null;
-            $this->status = $data['status'] ?? null;
-            $this->data_cadastro = $data['data_cadastro'] ?? null;
+            $this->status_cliente = $data['status_cliente'] ?? null;
+            $this->gm_cliente = $data['gm_cliente'] ?? null;
+            $this->numero_cliente = $data['numero_cliente'] ?? null;
+            $this->contato_cliente = $data['contato_cliente'] ?? null;
         }
     }
 
     // --- GETTERS & SETTERS ---
 
-    public function getIdEmpresa() {
-        return $this->id_empresa;
+    public function getIdCliente() {
+        return $this->id_cliente;
     }
 
-    public function setIdEmpresa($id_empresa) { 
-        $this->id_empresa = $id_empresa; return $this; 
+    public function setIdCliente($id_cliente) { 
+        $this->id_cliente = $id_cliente; return $this; 
     }
     
-    public function getNameEmpresa() { 
-        return $this->nome; 
+    public function getNameCliente() { 
+        return $this->nome_cliente; 
     }
-    public function setNameEmpresa($nome) { 
-        $this->nome = $nome; return $this; 
+
+    public function setNameCliente($nome_cliente) { 
+        $this->nome_cliente = $nome_cliente; return $this; 
     }
 
     public function getCnpj() {
-        return $this->cnpj;
+        return $this->cnpj_cliente;
     }
 
-    public function setCnpj($cnpj) {
-        $this->cnpj = $cnpj;
+    public function setCnpj($cnpj_cliente) {
+        $this->cnpj_cliente = $cnpj_cliente;
         return $this;
     }
 
@@ -58,20 +62,38 @@ class Customer {
     }
 
     public function getStatus() {
-        return $this->status;
+        return $this->status_cliente;
     }
 
-    public function setStatus($status) {
-        $this->status = $status;
+    public function setStatus($status_cliente) {
+        $this->status_cliente = $status_cliente;
         return $this;
     }
 
-    public function getDataCadastro() {
-        return $this->data_cadastro;
+    public function getGmCliente() {
+        return $this->gm_cliente;
     }
 
-    public function setDataCadastro($data_cadastro) {
-        $this->data_cadastro = $data_cadastro;
+    public function setGmCliente($gm_cliente) {
+        $this->gm_cliente = $gm_cliente;
+        return $this;
+    }
+
+    public function getNumeroCliente() {
+        return $this->numero_cliente;
+    }
+
+    public function setNumeroCliente($numero_cliente) {
+        $this->numero_cliente = $numero_cliente;
+        return $this;
+    }
+
+    public function getContatoCliente() {
+        return $this->contato_cliente;
+    }
+
+    public function setContatoCliente($contato_cliente) {
+        $this->contato_cliente = $contato_cliente;
         return $this;
     }
 
