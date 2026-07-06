@@ -31,8 +31,9 @@ class QueryRepository extends Database
 
         $values = array_merge(array_values($setArray), array_values($whereArray));
 
-        $stmt = $this->mysqlConnection->prepare($sql);
-        return $stmt->execute($values);
+        //$stmt = $this->mysqlConnection->prepare($sql);
+        //return $stmt->execute($values);
+        return $setParts;
 
     }
 

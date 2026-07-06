@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Repositories;
+use Exception;
 use src\Models\Customer;
 
 require_once __DIR__ . '/../Repositories/QueryRepository.php';
@@ -41,23 +42,20 @@ class CustomerRepository extends QueryRepository
     /**
      * Editar uma empresa
      */
-    public function editEnterprise(array $data): ?bool
+    public function editCustomer(array $data)
     {
+        $config = new Config();
+
         try {
-            $sql = "update empresas set cnpj = ?, nome = ? where unique_id = ?";
 
-            $stmt = $this->mysqlConnection->prepare($sql);
+            $stmt = $this->update("clientes", "numero_cliente = {$data['numero_cliente']}, nome_cliente = {$data['nome_cliente']}, contato_cliente = {$data['contato_cliente']}, cnpj_cliente = {$data['cnpj_cliente']}, status_cliente = {$data['status_cliente']}, gm_cliente = {$data['gm_cliente']}", "unique_id = '".$data['unique_id']."'");
 
-            return $stmt->execute([
-                $data['cnpj'],
-                $data['nome'],
-                $data['unique_id']
-            ]);
+            return $stmt;
 
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
 
             if ($e->getCode() === '23000') {
-                return null; // CNPJ duplicado
+                return null; // algo duplicado
             }
 
             throw $e;
@@ -68,7 +66,7 @@ class CustomerRepository extends QueryRepository
     /**
      * desativar e ativar empresa
      */
-    public function desativaEmpresa(string $unique_id, int $change): bool
+    public function changeStatus(string $unique_id, int $change): bool
     {
         $status = ($change == 1)? 'ativo' : 'inativo';
         $sql = "update empresas set status = '".$status."' WHERE unique_id = ? ";
@@ -96,31 +94,19 @@ class CustomerRepository extends QueryRepository
     /**
      * Retorna os IDs das empresas com base em seus unique_ids
      */
-    public function getIdEnterprises(array $uniqueIds): array
+    public function getIdCustomer(string $uniqueId)//: ? Customer
     {
-        if (empty($uniqueIds)) {
-            return [];
+        try{
+            $stmt = $this->select("clientes", "*", "unique_id = ".$uniqueId." ");
+
+            $return = new Customer($stmt);
+
+            return $return;
+        }
+        catch(PDOException $e){
+            throw $e;
         }
 
-        $placeholders = implode(',', array_fill(0, count($uniqueIds), '?'));
-
-        $sql = "
-            SELECT id_empresa
-            FROM empresas
-            WHERE unique_id IN ($placeholders)
-            ORDER BY nome ASC
-        ";
-
-        $stmt = $this->mysqlConnection->prepare($sql);
-        $stmt->execute(array_values($uniqueIds));
-
-        $Idempresas = [];
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $Idempresas[] = $row['id_empresa'];
-        }
-
-        return $Idempresas;
     }
 
 

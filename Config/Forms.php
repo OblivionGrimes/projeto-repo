@@ -161,4 +161,26 @@ class Forms {
             </button>
         </aside>';
     }
+
+    public function input_switch(string $name, string $status, string $nome_status){
+
+        $checked = $status === $nome_status ? "checked" : "";
+
+        return 
+        '<input
+            type="hidden"
+            name="'.$name.'"
+            value= "'.$status.'"
+        >
+        <input
+            type="checkbox"
+            class="kt-switch kt-switch-sm menu-button switch"
+            '.$checked.'
+            "onclick="this.form.submit()";
+        >';
+        
+        
+
+    }
+
 }
