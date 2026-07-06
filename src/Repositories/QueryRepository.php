@@ -10,6 +10,7 @@ require_once __DIR__ . '/../Core/Database.php';
 class QueryRepository extends Database
 {
 
+    ## -- EX: $this->update("clientes", "numero_cliente = {$data['numero_cliente']}, nome_cliente = {$data['nome_cliente']}, contato_cliente = {$data['contato_cliente']}, cnpj_cliente = {$data['cnpj_cliente']}, status_cliente = {$data['status_cliente']}, gm_cliente = {$data['gm_cliente']}", "unique_id = ".$data['unique_id']." ");
     protected function update (string $table, string $set, string $where) {
 
         $setArray = explode(',', $set);
@@ -82,7 +83,8 @@ class QueryRepository extends Database
 
     }
 
-    protected function select(string $table, string $columns, string $where = '', string $orderBy = '', string $limit = '')
+    #-- EX: $this->select("clientes", "*", "numero_cliente = 123, status_cliente = 'ativo'", "nome_cliente ASC", "10");
+    protected function select(string $table, string $columns, string $where = '', string $orderBy = '', string $limit = '', bool $fetchAll = false)
     {
         $sql    = "SELECT {$columns} FROM {$table}";
         $values = [];
@@ -118,6 +120,10 @@ class QueryRepository extends Database
 
         $stmt = $this->mysqlConnection->prepare($sql);
         $stmt->execute($values);
+
+        if($fetchAll){
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
