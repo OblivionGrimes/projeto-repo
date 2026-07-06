@@ -3,16 +3,13 @@
     //$isIframe  = isset($_GET['iframe']) && $_GET['iframe'] == 'customerEdit';
     $unique_customer  = $_GET['customer_unique'] ?? null;
 
-    $customer = $CustomerRepository->getIdCustomer($unique_customer);
-
-    //echo $customer->getStatus();
-
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_cliente'])){
 
         $numero_cliente = $config->sanitize($_POST['numero_cliente']);
         $contato_cliente = $config->sanitize($_POST['contato_cliente']);
         $nome_cliente = $config->sanitize($_POST['nome_cliente']);
         $cnpj = $config->sanitize($_POST['cnpj']);
+        $unique_id = base64_decode($_POST['unique_id']);
         $status = $_POST['BT_STATUS'];
         $gm_status = $_POST['BT_GM_STATUS'];
 
@@ -23,10 +20,8 @@
             'cnpj_cliente' => $cnpj,
             'status_cliente' => $status,
             'gm_cliente' => $gm_status,
-            'unique_id' => $customer->getUniqueId()
+            'unique_id' => $unique_id
         ]);
-
-        var_dump($result);
 
         if ($result === true) {
             $config->alerta_toast("Cliente editado com sucesso!", 1);
@@ -38,6 +33,7 @@
 
     }
 
+    $customer = $CustomerRepository->getIdCustomer($unique_customer);
 
 ?>
  
@@ -95,6 +91,7 @@
                             </div>
 
                             <div class="flex justify-end pt-2">
+                                <?php echo $forms->input("hidden", "unique_id", "unique_id", base64_encode($customer->getUniqueId())); ?>
                                 <?php echo $forms->button(
                                     "submit", 
                                     "edit_cliente", 

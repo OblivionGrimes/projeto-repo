@@ -48,7 +48,7 @@ class CustomerRepository extends QueryRepository
 
         try {
 
-            $stmt = $this->update("clientes", "numero_cliente = {$data['numero_cliente']}, nome_cliente = {$data['nome_cliente']}, contato_cliente = {$data['contato_cliente']}, cnpj_cliente = {$data['cnpj_cliente']}, status_cliente = {$data['status_cliente']}, gm_cliente = {$data['gm_cliente']}", "unique_id = '".$data['unique_id']."'");
+            $stmt = $this->update("clientes", "numero_cliente = {$data['numero_cliente']}, nome_cliente = {$data['nome_cliente']}, contato_cliente = {$data['contato_cliente']}, cnpj_cliente = {$data['cnpj_cliente']}, status_cliente = {$data['status_cliente']}, gm_cliente = {$data['gm_cliente']}", "unique_id = ".$data['unique_id']." ");
 
             return $stmt;
 

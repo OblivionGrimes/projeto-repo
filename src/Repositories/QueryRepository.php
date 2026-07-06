@@ -16,24 +16,29 @@ class QueryRepository extends Database
         $whereArray = explode(',', $where);
         
         $setParts = [];
-        foreach($setArray as $column => $value){
-            $setParts[] = "{$column} = ?"; 
+        $setValues = [];
+        foreach($setArray as $part){
+            $pieces = explode('=', $part, 2);
+            $setParts[] = trim($pieces[0]) . " = ?";
+            $setValues[] = trim($pieces[1]);
         }
         $setString = implode(', ', $setParts);
 
         $setWhere = [];
-        foreach($whereArray as $column => $value){
-            $setWhere[] = "{$column} = ?";
+        $whereValues = [];
+        foreach($whereArray as $part){
+            $pieces = explode('=', $part, 2);
+            $setWhere[] = trim($pieces[0]) . " = ?";
+            $whereValues[] = trim($pieces[1]);
         }
         $whereString = implode(' AND ', $setWhere);
 
         $sql = "UPDATE {$table} SET {$setString} WHERE {$whereString}";
 
-        $values = array_merge(array_values($setArray), array_values($whereArray));
+        $values = array_merge($setValues, $whereValues);
 
-        //$stmt = $this->mysqlConnection->prepare($sql);
-        //return $stmt->execute($values);
-        return $setParts;
+        $stmt = $this->mysqlConnection->prepare($sql);
+        return $stmt->execute($values);
 
     }
 
