@@ -62,20 +62,26 @@ class CustomerRepository extends QueryRepository
         }
     }
 
-
     /**
-     * desativar e ativar empresa
+     * desativar e ativar cliente
      */
-    public function changeStatus(string $unique_id, int $change): bool
+    public function changeStatus(string $unique_id, string $status): bool
     {
-        $status = ($change == 1)? 'ativo' : 'inativo';
-        $sql = "update empresas set status = '".$status."' WHERE unique_id = ? ";
-        $stmt = $this->mysqlConnection->prepare($sql);
-        return $stmt->execute([$unique_id]);
+        $stmt = $this->update("clientes", "status_cliente = ".trim($status)." ", "unique_id = ".$unique_id." ");
+        return $stmt;
     }
 
     /**
-     * Retorna todas as empresas existentes no sistema
+     * Excluir cliente
+     */
+    public function deleteCustomer(string $unique_id)
+    {
+        $stmt = $this->delete("clientes", "unique_id = ".$unique_id." ");
+        return $stmt;
+    }
+
+    /**
+     * Retorna todas os clientes existentes no sistema
      */
     public function getAllCustomers()
     {

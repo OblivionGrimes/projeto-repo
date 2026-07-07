@@ -1,5 +1,5 @@
 <?php
-// criar o table logo, drawer de criar ja esta completo, depois adicionar o de edit
+
     $customers = $CustomerRepository->getAllCustomers();
 
 ?>
@@ -134,36 +134,35 @@
                                         <form method="POST" class="d-inline">
                                             <div class="flex justify-end items-center gap-2">
                                                 <input type="hidden" name="current_section" class="current-section-input">
-                                                <input type="hidden" name="unique_id" value="<?= 'teste' ?>">
+                                                <input type="hidden" name="unique_id" value="<?= base64_encode($resC->getUniqueId()) ?>">
 
                                                 <!-- button do modal de edição do frame -->
-                                                <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/edit?iframe=customerEdit&customer_unique=".$resC->getUniqueId(), "Editar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
+                                                <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/edit?iframe=customerEdit&customer_unique=".base64_encode($resC->getUniqueId()), "Editar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
 
-
-                                                <!-- SWITCH, precisa de dois inputs aqui ja que um é para executar a ação e o outro para o envio do 'name' -->
                                                 <input
                                                     type="hidden"
-                                                    name="<?= 'ativo' === 'ativo' ? 'desativa_bi' : 'active_bi' ?>"
-                                                >
+                                                    name="switch_status"
+                                                    value="<?= $resC->getStatus() === 'ativo' ? 'bt_active' : 'bt_inactive' ?>"
+                                                >    
+
                                                 <input
                                                     type="checkbox"
+                                                    value="<?= $resC->getStatus() ?>"
                                                     class="kt-switch kt-switch-sm menu-button switch"
-                                                    <?= 'ativo' === 'ativo' ? 'checked' : '' ?>
+                                                    <?= $resC->getStatus() === 'ativo' ? 'checked' : '' ?>
                                                     onclick="this.form.submit();"
                                                 >
 
+                                                <button
+                                                    type="submit"
+                                                    name="delete_bi"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este painel?')"
+                                                    class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
+                                                    title="Excluir"
+                                                >
+                                                    <i class="ki-outline ki-trash fs-4"></i>
+                                                </button>
 
-                                                <?php if($PermissionRepository->isMaster()): ?>
-                                                    <button
-                                                        type="submit"
-                                                        name="delete_bi"
-                                                        onclick="return confirm('Tem certeza que deseja excluir este painel?')"
-                                                        class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
-                                                        title="Excluir"
-                                                    >
-                                                        <i class="ki-outline ki-trash fs-4"></i>
-                                                    </button>
-                                                <?php endif ?>
                                             </div>
                                             
                                         </form>

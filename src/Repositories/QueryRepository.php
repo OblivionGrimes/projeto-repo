@@ -68,15 +68,19 @@ class QueryRepository extends Database
     protected function delete (string $table, string $where) {
 
         $whereArray = explode(',', $where);
+
         $setWhere = [];
-        foreach ($whereArray as $column => $value){
-            $setWhere[] = "{$column} = ?";
+        $setWhereValue = [];
+        foreach ($whereArray as $column){
+            $pieces = explode('=', $column, 2);
+            $setWhere[] = trim($pieces[0]). " = ?";
+            $setWhereValue[] = trim($pieces[1]);
         }
 
         $whereString = implode(' AND ', $setWhere);
         $sql = "DELETE FROM {$table} WHERE {$whereString}";
 
-        $values = array_values($whereArray);
+        $values = array_values($setWhereValue);
 
         $stmt = $this->mysqlConnection->prepare($sql);
         return $stmt->execute($values);

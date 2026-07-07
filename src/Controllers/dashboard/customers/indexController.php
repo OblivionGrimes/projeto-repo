@@ -1,6 +1,6 @@
 <?php
 
-    $isIframe  = isset($_GET['iframe']) && $_GET['iframe'] == 'customers';
+    //$isIframe  = isset($_GET['iframe']) && $_GET['iframe'] == 'customers';
 
     ############################## Codigos da pagina ##############################
     if($_SERVER['REQUEST_METHOD'] === 'POST' and isset($_POST['registro_cliente'])) {
@@ -19,6 +19,7 @@
 
         if ($result === true) {
             $config->alerta_toast("Cliente cadastrado com sucesso!", 1);
+            echo $config->reloading(); // recarrega a pagina
         } elseif ($result === null) {
             $config->alerta_toast("O número do cliente informado já está cadastrado.", 2);
         } else {
@@ -26,5 +27,7 @@
         }
 
     }
+
     ###############################################################################
+    
 ?>
