@@ -65,7 +65,7 @@ class LoginRepository extends QueryRepository{
     }
 
     // Salva o codigo de recuperação no banco de dados
-    public function saveRecoveryCode(string $email, int $codigo): bool{
+    public function saveRecoveryCode(string $email, int $codigo){
 
         try{
 

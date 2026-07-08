@@ -22,7 +22,12 @@ if ($isPublicPage) {
     // =========================
     // LAYOUT PÚBLICO (Login)
     // =========================
-    require_once 'src/Views/head.php'; 
+    require_once 'src/Views/head.php';
+
+    $controller = $router->getControllerFromView($viewToLoad);
+    if ($controller) {
+        require_once $controller;
+    }
     
     if (file_exists($viewToLoad)) {
         require_once $viewToLoad;
@@ -39,6 +44,11 @@ if ($isPublicPage) {
     $LoginRepository->redirectIfNotLogged();
 
     require_once 'src/Views/head.php';
+
+    $controller = $router->getControllerFromView($viewToLoad);
+    if ($controller) {
+        require_once $controller;
+    }
 
     if (!$isIframe){
         require_once 'src/Views/header.php';

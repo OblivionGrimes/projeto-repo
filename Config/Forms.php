@@ -23,11 +23,11 @@ class Forms {
         return '<input class="'.$class.'" type="'.$type.'" name="'.$name.'" id="'.$id.'" value="'.$value.'" placeholder="'.$placeholder.'", maxlength="'.$maxlenght.'" '.$requiredAttr.' >';
     }
 
-    public function inputTel (string $type, $name, $id, $value, $pattern, $maxlenght, $class, bool $required = false){
+    public function inputTel (string $type, $name, $id, $value, string $placeholder = '', $pattern, $maxlenght, $class, bool $required = false){
 
         $requiredAttr = $required ? 'required' : '';
 
-        return '<input type="'.$type.'" pattern="'.$pattern.'" maxlength="'.$maxlenght.'" class="'.$class.'" id="'.$id.'" value="'.$value.'" name="'.$name.'" '.$requiredAttr.'>';
+        return '<input type="'.$type.'" pattern="'.$pattern.'" maxlength="'.$maxlenght.'" placeholder="'.$placeholder.'" class="'.$class.'" id="'.$id.'" value="'.$value.'" name="'.$name.'" '.$requiredAttr.'>';
     }
 
     public function inputChecked (string $type ,string $name, string $id, $checked, string $value = '', string $class = '', bool $required = false){
@@ -161,4 +161,26 @@ class Forms {
             </button>
         </aside>';
     }
+
+    public function input_switch(string $name, string $status, string $nome_status){
+
+        $checked = $status === $nome_status ? "checked" : "";
+
+        return 
+        '<input
+            type="hidden"
+            name="'.$name.'"
+            value= "'.$status.'"
+        >
+        <input
+            type="checkbox"
+            class="kt-switch kt-switch-sm menu-button switch"
+            '.$checked.'
+            "onclick="this.form.submit()";
+        >';
+        
+        
+
+    }
+
 }

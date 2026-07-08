@@ -1,4 +1,9 @@
-<!-- Drawer create -->
+<!-- Drawer Edit -->
+<?php
+    $unique_customer  = base64_decode($_GET['customer_unique']) ?? null;
+
+    $customer = $CustomerRepository->getIdCustomer($unique_customer);
+?>
  
 <div class="flex flex-col grow kt-scrollable-y-auto lg:[--kt-scrollbar-width:auto] bg-white ">
 
@@ -14,7 +19,7 @@
                     <div class="kt-card-header">
                         <h3 class="kt-card-title">
                             <i class="ki-outline ki-bank fs-2 text-primary me-2"></i>
-                            Cadastrar Novo Cliente
+                            <?= $customer->getNameCliente() ?>
                         </h3>
                     </div>
 
@@ -25,29 +30,40 @@
                             
                             <div class="flex flex-col gap-2">
                                 <?php echo $forms->label("numero_cliente", "Número do Cliente", "kt-form-label pb-2 required"); ?>
-                                <?php echo $forms->input("number", "numero_cliente", "numero_cliente", "", "Digite o número que consta no sistema", "kt-input w-full", "", true); ?>
+                                <?php echo $forms->input("number", "numero_cliente", "numero_cliente", $customer->getNumeroCliente(), "Digite o número que consta no sistema", "kt-input w-full", "", true); ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
                                 <?php echo $forms->label("nome_cliente", "Nome do Cliente", "kt-form-label pb-2 required"); ?>
-                                <?php echo $forms->input("text", "nome_cliente", "nome_cliente", "", "Digite o nome do cliente", "kt-input w-full", "", true); ?>
+                                <?php echo $forms->input("text", "nome_cliente", "nome_cliente", $customer->getNameCliente(), "Digite o nome do cliente", "kt-input w-full", "", true); ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
                                 <?php echo $forms->label("contato_cliente", "Contato do Cliente", "kt-form-label pb-2"); ?>
-                                <?php echo $forms->inputTel("tel", "contato_cliente", "contato_cliente", "", "Digite o telefone (somente números)", "[0-9]{10,11}", "11", "kt-input w-full", false) ?>
+                                <?php echo $forms->inputTel("tel", "contato_cliente", "contato_cliente", $customer->getContatoCliente(), "Digite o telefone (somente números)", "[0-9]{10,11}", "11", "kt-input w-full", false) ?>
                             </div>
                             
                             <div class="flex flex-col gap-2">
                                 <?php echo $forms->label("cnpj", "CNPJ", "kt-form-label pb-2"); ?>
-                                <?php echo $forms->input("text", "cnpj", "cnpj", "", "00.000.000/0000-00", "kt-input w-full", "18", false); ?>
+                                <?php echo $forms->input("text", "cnpj", "cnpj", $customer->getCnpj(), "00.000.000/0000-00", "kt-input w-full", "18", false); ?>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <?php echo $forms->label("BT_STATUS", "Status cliente", "kt-form-label pb-2"); ?>
+                                <?php echo $forms->input_switch("BT_STATUS" ,$customer->getStatus(), "ativo"); ?>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <?php echo $forms->label("BT_GM_STATUS", "Faz parte do grupo GM?", "kt-form-label pb-2"); ?>
+                                <?php echo $forms->input_switch("BT_GM_STATUS" ,$customer->getGmCliente(), "sim"); ?>
                             </div>
 
                             <div class="flex justify-end pt-2">
+                                <?php echo $forms->input("hidden", "unique_id", "unique_id", base64_encode($customer->getUniqueId())); ?>
                                 <?php echo $forms->button(
                                     "submit", 
-                                    "registro_cliente", 
-                                    "registro_cliente", 
+                                    "edit_cliente", 
+                                    "edit_cliente", 
                                     "button menu-button permissions kt-btn kt-btn-sm rounded-full", 
                                     "ki-outline ki-cloud-add", 
                                     "CADASTRAR"

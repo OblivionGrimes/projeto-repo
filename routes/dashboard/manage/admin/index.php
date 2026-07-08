@@ -43,7 +43,7 @@
 
         <!-- Incluir as sections aqui depois -->
 
-        <?php include __DIR__ . '/sections/companies.php' ?>
+        <?php include __DIR__ . '/sections/customers.php' ?>
         
 
         </div>
