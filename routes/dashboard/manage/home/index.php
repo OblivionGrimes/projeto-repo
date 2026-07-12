@@ -13,7 +13,7 @@
 
             <ul class="flex flex-col gap-1">
                 <li>
-                    <a href="#" data-target="section-frames" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                    <a href="#" data-target="section-aberto" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
                         <i class="ki-outline ki-tablet fs-5 text-gray-500"></i>
                         <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Em Aberto</span>
                     </a>
@@ -41,7 +41,7 @@
         <div class="kt-container kt-container-fluid pt-5">
 
         <!-- Aqui vai ser a parte principal do conteúdo, contendo as tables de reposições em aberto e etc. -->
-
+        <?php include __DIR__ . '/sections/em_aberto.php' ?>
         
 
         </div>

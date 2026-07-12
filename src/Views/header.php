@@ -1,9 +1,7 @@
 <?php
-
-    $Nada = "nada";
-
+    // informações do usuário logado
+    $user_logged = $_SESSION['logged_user'];
 ?>
-
 
 <header id="header" class="fixed w-full border-b border-gray-200 shadow-md bg-major-2">
     
@@ -17,7 +15,7 @@
                         class="h-8 sm:h-10 w-auto object-contain shrink-0"
                         alt="Logo"
                     />
-
+                    <!--
                     <span class="text-gray-400 mx-1 shrink-0 text-sm sm:text-base">
                         |
                     </span>
@@ -26,8 +24,8 @@
                         class="font-bold text-gray-400 tracking-tight
                             text-xs sm:text-sm
                             truncate max-w-[120px] sm:max-w-none">
-                        <?= strtoupper($Nada); ?>
-                    </span>
+                        <?php //strtoupper($Nada); ?>
+                    </span>-->
 
                 </div>
             </div>
@@ -76,10 +74,10 @@
 
                         <div class="flex-1 text-left hidden lg:block leading-tight">
                             <div class="menu-text text-sm font-medium ">
-                                <?= substr($Nada,0,15) ?>
+                                <?= substr($user_logged->getName(),0,15) ?>
                             </div>
                             <div class="text-xs menu-text alvorecer-3">
-                                <?= ucfirst($Nada) ?>
+                                <?= ucfirst($user_logged->getTipo()) ?>
                             </div>
                         </div>
 
@@ -90,8 +88,8 @@
                     <div id="user-dropdown-menu" 
                         class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-1 border border-gray-200 ">
                         <div class="px-4 py-3">
-                            <p class="text-sm font-medium text-gray-900"><?= $Nada ?></p>
-                            <p class="text-xs text-gray-500 mt-1"><?= ucfirst($Nada) ?></p>
+                            <p class="text-sm font-medium text-gray-900"><?= $user_logged->getName() ?></p>
+                            <p class="text-xs text-gray-500 mt-1"><?= ucfirst($user_logged->getTipo()) ?></p>
                             <!-- muda a empresa no dropdown -->
                             <div class="flex items-center">
                                 <!-- aqui ficava um select de seleção de empresa, creio que não é mais necessário -->
