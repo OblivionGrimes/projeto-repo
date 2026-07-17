@@ -14,7 +14,7 @@
 
             <ul class="flex flex-col gap-1">
                 <li>
-                    <a href="#" data-target="section-companies" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                    <a href="#" data-target="section-customers" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
                         <i class="ki-outline ki-tablet fs-5 text-gray-500"></i>
                         <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Cadastro de Clientes</span>
                     </a>
@@ -53,19 +53,21 @@
                                 <div class="kt-menu-item ">
                                     <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
                                         <!-- <i class="ki-outline ki-users fs-5 text-gray-500"></i> -->
-                                        <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Relatórios</span>
+                                        <span class="text-sm kt-menu-title whitespace-nowrap transition-opacity duration-200">Relatórios</span>
                                     </a>
                                 </div>
 
                                 <div class="kt-menu-item active">
-                                    <a class="kt-menu-link" href="#">
-                                        <span class="kt-menu-title text-sm">Fevereiro, 2024</span>
+                                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                                        <!-- <i class="ki-outline ki-users fs-5 text-gray-500"></i> -->
+                                        <span class="text-sm kt-menu-title whitespace-nowrap transition-opacity duration-200">Relatórios</span>
                                     </a>
                                 </div>
 
                                 <div class="kt-menu-item">
-                                    <a class="kt-menu-link" href="#">
-                                        <span class="kt-menu-title text-sm">Março, 2024</span>
+                                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                                        <!-- <i class="ki-outline ki-users fs-5 text-gray-500"></i> -->
+                                        <span class="text-sm kt-menu-title whitespace-nowrap transition-opacity duration-200">Relatórios</span>
                                     </a>
                                 </div>
 

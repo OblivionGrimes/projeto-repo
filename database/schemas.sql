@@ -78,6 +78,12 @@ CREATE TABLE espessura (
     CREATE_AT datetime not null DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE `motivo` (
+  `id_motivo` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `motivo` varchar(60) NOT NULL,
+  `CREATE_AT` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) 
+
 CREATE TABLE peca (
 	id_peca int PRIMARY key not null AUTO_INCREMENT,
     num_peca varchar(15) not null,

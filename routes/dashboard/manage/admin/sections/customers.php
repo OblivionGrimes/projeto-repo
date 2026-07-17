@@ -5,7 +5,7 @@
 ?>
 
 
-<section id="section-companies" class="admin-section">
+<section id="section-customers" class="admin-section">
     <div class="col-xl-6 padding-5">
         <div class="kt-card h-100 shadow-md">
 
