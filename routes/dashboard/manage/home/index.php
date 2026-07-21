@@ -20,14 +20,14 @@
                 </li>
 
                 <li>
-                    <a href="#" data-target="section-empresas" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                    <a href="#" data-target="section-finalizadas" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
                         <i class="ki-outline ki-bank fs-5 text-gray-500"></i>
                         <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Peças finalizadas</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                    <a href="#" data-target="section-retorno" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
                         <i class="ki-outline ki-users fs-5 text-gray-500"></i>
                         <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Aguardando Peças</span>
                     </a>
@@ -41,7 +41,7 @@
         <div class="kt-container kt-container-fluid pt-5">
 
         <!-- Aqui vai ser a parte principal do conteúdo, contendo as tables de reposições em aberto e etc. -->
-        <?php include __DIR__ . '/sections/em_aberto.php' ?>
+        <?php include __DIR__ . '/sections/in_open.php' ?>
         
 
         </div>
