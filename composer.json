@@ -2,7 +2,7 @@
     "name": "mathe/projeto-repo",
     "autoload": {
         "psr-4": {
-            "Mathe\\ProjetoRepo\\": "src/"
+            "src\\": "src/"
         }
     },
     "authors": [

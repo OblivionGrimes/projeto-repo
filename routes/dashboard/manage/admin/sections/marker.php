@@ -2,7 +2,7 @@
 
 <?php
 
-    $customers = $CustomerRepository->getAllCustomers();
+    $markers = $piecesRepository->getAllMarkers();
 
 ?>
 
@@ -21,8 +21,8 @@
                 </div>
 
                 <!-- iframe de criação do frame -->
-                <?= $forms->drawerI('kt_companies_drawer', 'kt-drawer kt-drawer-end flex-col w-[520px] top-5 bottom-5 end-5 rounded-xl flex hidden', 
-                    'companies-drawer', 'kt_companies_drawer_close') ?>
+                <?= $forms->drawerI('kt_marker_drawer', 'kt-drawer kt-drawer-end flex-col w-[520px] top-5 bottom-5 end-5 rounded-xl flex hidden', 
+                    'companies-drawer', 'kt_marker_drawer_close') ?>
 
                     <div class="flex items-right justify-end bg-white rounded-xl p-2">
                         <button type="button" class="btn btn-sm btn-icon btn-light flex items-center justify-center cursor-pointer" data-kt-drawer-dismiss="true">
@@ -42,19 +42,7 @@
                 <div class="flex items-center gap-2">
 
                     <!-- button do modal de criação do companies-->
-                    <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/index?iframe=customers", "Adicionar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar cliente") ?>
-
-                    <!-- Por enquanto não necessario este botão -->
-                    <button
-                        type="button"
-                        class="button menu-button permissions kt-btn kt-btn-sm rounded-full hidden"
-                        data-refresh-table
-                    >
-                        <i class="ki-outline ki-eraser fs-4"></i>
-                        <span class="texto-permissao">
-                            Limpar filtros
-                        </span>
-                    </button>
+                    <?= $forms->buttonDrawer("kt_marker_drawer", BASE_URL."d/manage/workers/indexMarker?iframe=marker", "Adicionar conferente/marcador", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar conferente/marcador") ?>
 
                 </div>
             </div>
@@ -66,105 +54,68 @@
                     <table class="kt-table table-auto kt-table-border align-middle">
                         <thead>
                             <tr class="text-gray-500 fw-semibold fs-7 text-uppercase">
-                                <th>Nº Cliente</th>
-                                <th>Cliente</th>
-                                <th>Contato</th>
-                                <th>CNPJ</th>
-                                <th>Status</th>
+                                <th>Nº</th>
+                                <th>Conferente/Marcador</th>
+                                <th>Data</th>
                                 <th class="text-end">Ações</th>
                             </tr>
                         </thead>
 
-                        <tbody class="fw-semibold text-gray-700" id="frames-table" data-filter-scope>
-                            <!-- Foreach aquiiiiiii -->
-                                <?php
-                                    foreach ($customers as $resC):
-                                    #$empresa = $EnterpriseRepository->getEnterpriseById($frame->getEmpresaId())[0];
-                                    #$empresaId   = $frame->getEmpresaId();
-                                    #$empresaNome = $empresa->getNameEmpresa();
-                                ?>
+                        <tbody class="fw-semibold text-gray-700">
 
-                                <tr data-empresa-nome="<?= htmlspecialchars('teste') ?>"
-                                    data-status="<?= 'Ativo' ?>">
+                            <?php
+                                $i = 1;
+                                foreach ($markers as $resM):
+                            ?>
 
-                                    <!-- Numero cliente -->
+                                <tr>
+
+                                    <!-- Numero -->
                                     <td>
                                         <span>
-                                            <?= $resC->getNumeroCliente() ?>
+                                            <?= $i++; ?>
                                         </span>
                                     </td>
 
-                                    <!-- nome cliente -->
+                                    <!-- conferente/marcador -->
                                     <td>
                                         <a class="text-muted fs-8 text-truncate mw-300px d-inline-block">
                                             <i class="ki-outline ki-exit-right-corner fs-4"></i>
                                             <span class="texto-permissao">
-                                                <?= ucfirst($resC->getNameCliente()); ?>
+                                                <?= ucfirst($resM['conferente']); ?>
                                             </span>
                                         </a>
                                     </td>
 
-                                    <!-- Contato -->
+                                    <!-- Data -->
                                     <td>
                                         <span class="text-muted fs-8 text-truncate mw-300px">
-                                            <?= $mask->maskTelefone($resC->getContatoCliente()) ?>
+                                            <?= $mask->Data($resM['CREATE_AT']) ?>
                                         </span>
                                     </td>
-
-                                    <!-- CNPJ -->
-                                    <td>
-                                        <i class="ki-outline ki-switch fs-4"></i>
-                                        <?= $mask->formatarCnpj($resC->getCnpj()) ?>
-                                    </td>
-
-                                    <!-- Status -->
-                                    <?php $badgeColor = ($resC->getStatus() === 'ativo') ? 'status-active' : 'status-inactive'; ?>
-
-                                    <td>
-                                        <button 
-                                            type="button"
-                                            class="status-filter status-badge kt-badge-sm uppercase cursor-pointer <?= $badgeColor ?>"
-                                            data-filter-key="status"
-                                            data-filter-value="<?= $resC->getStatus() ?>"
-                                        >
-                                            <?= $resC->getStatus() ?>
-                                        </button>
-                                    </td>
-
 
                                     <!-- Ações -->
                                     <td class="text-end">
                                         <form method="POST" class="d-inline">
                                             <div class="flex justify-end items-center gap-2">
                                                 <input type="hidden" name="current_section" class="current-section-input">
-                                                <input type="hidden" name="unique_id" value="<?= base64_encode($resC->getUniqueId()) ?>">
+                                                <input type="hidden" name="unique_id" value="<?= base64_encode($resM['unique_id']) ?>">
 
-                                                <!-- button do modal de edição do frame -->
-                                                <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/edit?iframe=customerEdit&customer_unique=".base64_encode($resC->getUniqueId()), "Editar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
+                                                <div class="flex flex-col gap-2">
+                                                    <?php echo $forms->label("BT_GM_STATUS", "Faz parte do grupo GM?", "kt-form-label pb-2"); ?>
+                                                    <?php echo $forms->input_switch("BT_GM_STATUS" ,'', "sim"); ?>
+                                                </div>
 
-                                                <input
-                                                    type="hidden"
-                                                    name="switch_status"
-                                                    value="<?= $resC->getStatus() === 'ativo' ? 'bt_active' : 'bt_inactive' ?>"
-                                                >    
-
-                                                <input
-                                                    type="checkbox"
-                                                    value="<?= $resC->getStatus() ?>"
-                                                    class="kt-switch kt-switch-sm menu-button switch"
-                                                    <?= $resC->getStatus() === 'ativo' ? 'checked' : '' ?>
-                                                    onclick="this.form.submit();"
-                                                >
-
+                                                <!-- verificar se tem alguma ligação, se não houver, poderar excluir (ainda não feito)-->
                                                 <button
                                                     type="submit"
-                                                    name="delete_bi"
-                                                    onclick="return confirm('Tem certeza que deseja excluir este painel?')"
+                                                    name="delete_marker"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este conferente/marcador?')"
                                                     class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
                                                     title="Excluir"
                                                 >
                                                     <i class="ki-outline ki-trash fs-4"></i>
-                                                </button>
+                                                </button> 
 
                                             </div>
                                             

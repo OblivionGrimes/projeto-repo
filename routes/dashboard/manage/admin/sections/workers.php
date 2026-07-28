@@ -16,7 +16,7 @@
                 <div class="kt-card-title">
                     <h3 class="fw-bold">
                         <i class="ki-outline ki-tablet fs-2 text-primary me-2"></i>
-                        Funcionários 
+                        Funcionários (Parado ainda)
                     </h3>
                 </div>
 

@@ -53,50 +53,19 @@ class Forms {
         string $name,
         string $id,
         array $options,
-        string $valueKey,
-        string $labelKey,
         string $selectedValue = '',
-        string $class = 'form-select',
+        string $class = 'kt-input w-full',
         bool|string $required = false,
-        bool|string $autoSubmit = false,
         string $placeholder = 'Selecione uma opção...'
     ) {
-        // required
         $requiredAttr = $required === true ? 'required' : '';
 
-        // onchange
-        if ($autoSubmit === true) {
-            $onChangeAttr = 'onchange="this.form.submit()"';
-        } elseif (is_string($autoSubmit) && $autoSubmit !== '') {
-            $onChangeAttr = 'onchange="'.$autoSubmit.'"';
-        } else {
-            $onChangeAttr = '';
-        }
+        $html  = '<select class="'.$class.'" name="'.$name.'" id="'.$id.'" '.$requiredAttr.'>';
+        $html .= '<option value="">'.$placeholder.'</option>';
 
-        $html  = '<select class="'.$class.'" name="'.$name.'" id="'.$id.'" '.$onChangeAttr.' '.$requiredAttr.'>';
-
-        if ($placeholder !== '') {
-            $html .= '<option value="">'.$placeholder.'</option>';
-        }
-
-        foreach ($options as $key => $option) {
-
-            // 🔹 Caso 1: array associativo (id => nome)
-            if (!is_array($option)) {
-                $value = $key;
-                $label = $option;
-            }
-            // 🔹 Caso 2: array de arrays
-            else {
-                $value = $option[$valueKey];
-                $label = $option[$labelKey];
-            }
-
-            $selected = ((string)$value === (string)$selectedValue) ? 'selected' : '';
-
-            $html .= '<option value="'.htmlspecialchars($value, ENT_QUOTES, 'UTF-8').'" '.$selected.'>'
-                . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') .
-                '</option>';
+        foreach ($options as $value => $label) {
+            $selected = ($value == $selectedValue) ? 'selected' : '';
+            $html .= '<option value="'.$value.'" '.$selected.'>'.$label.'</option>';
         }
 
         $html .= '</select>';

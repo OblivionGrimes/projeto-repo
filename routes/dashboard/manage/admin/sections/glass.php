@@ -2,7 +2,7 @@
 
 <?php
 
-    $customers = $CustomerRepository->getAllCustomers();
+    $glass = $piecesRepository->getAllGlass();
 
 ?>
 
@@ -16,13 +16,13 @@
                 <div class="kt-card-title">
                     <h3 class="fw-bold">
                         <i class="ki-outline ki-tablet fs-2 text-primary me-2"></i>
-                        Vidros 
+                        Tipos de vidros 
                     </h3>
                 </div>
 
                 <!-- iframe de criação do frame -->
-                <?= $forms->drawerI('kt_companies_drawer', 'kt-drawer kt-drawer-end flex-col w-[520px] top-5 bottom-5 end-5 rounded-xl flex hidden', 
-                    'companies-drawer', 'kt_companies_drawer_close') ?>
+                <?= $forms->drawerI('kt_glass_drawer', 'kt-drawer kt-drawer-end flex-col w-[520px] top-5 bottom-5 end-5 rounded-xl flex hidden', 
+                    'companies-drawer', 'kt_glass_drawer_close') ?>
 
                     <div class="flex items-right justify-end bg-white rounded-xl p-2">
                         <button type="button" class="btn btn-sm btn-icon btn-light flex items-center justify-center cursor-pointer" data-kt-drawer-dismiss="true">
@@ -42,19 +42,7 @@
                 <div class="flex items-center gap-2">
 
                     <!-- button do modal de criação do companies-->
-                    <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/index?iframe=customers", "Adicionar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar cliente") ?>
-
-                    <!-- Por enquanto não necessario este botão -->
-                    <button
-                        type="button"
-                        class="button menu-button permissions kt-btn kt-btn-sm rounded-full hidden"
-                        data-refresh-table
-                    >
-                        <i class="ki-outline ki-eraser fs-4"></i>
-                        <span class="texto-permissao">
-                            Limpar filtros
-                        </span>
-                    </button>
+                    <?= $forms->buttonDrawer("kt_glass_drawer", BASE_URL."d/manage/pieces/indexGlass?iframe=glass", "Adicionar vidro", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar vidro") ?>
 
                 </div>
             </div>
@@ -66,105 +54,63 @@
                     <table class="kt-table table-auto kt-table-border align-middle">
                         <thead>
                             <tr class="text-gray-500 fw-semibold fs-7 text-uppercase">
-                                <th>Nº Cliente</th>
-                                <th>Cliente</th>
-                                <th>Contato</th>
-                                <th>CNPJ</th>
-                                <th>Status</th>
+                                <th>Nº</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
                                 <th class="text-end">Ações</th>
                             </tr>
                         </thead>
 
-                        <tbody class="fw-semibold text-gray-700" id="frames-table" data-filter-scope>
-                            <!-- Foreach aquiiiiiii -->
-                                <?php
-                                    foreach ($customers as $resC):
-                                    #$empresa = $EnterpriseRepository->getEnterpriseById($frame->getEmpresaId())[0];
-                                    #$empresaId   = $frame->getEmpresaId();
-                                    #$empresaNome = $empresa->getNameEmpresa();
-                                ?>
+                        <tbody class="fw-semibold text-gray-700">
 
-                                <tr data-empresa-nome="<?= htmlspecialchars('teste') ?>"
-                                    data-status="<?= 'Ativo' ?>">
+                            <?php
+                                $i = 1;
+                                foreach ($glass as $resG):
+                            ?>
 
-                                    <!-- Numero cliente -->
+                                <tr>
+
+                                    <!-- Numero -->
                                     <td>
                                         <span>
-                                            <?= $resC->getNumeroCliente() ?>
+                                            <?= $i++; ?>
                                         </span>
                                     </td>
 
-                                    <!-- nome cliente -->
+                                    <!-- tipo -->
                                     <td>
                                         <a class="text-muted fs-8 text-truncate mw-300px d-inline-block">
                                             <i class="ki-outline ki-exit-right-corner fs-4"></i>
                                             <span class="texto-permissao">
-                                                <?= ucfirst($resC->getNameCliente()); ?>
+                                                <?= ucfirst($resG['tipo_vidro']); ?>
                                             </span>
                                         </a>
                                     </td>
 
-                                    <!-- Contato -->
+                                    <!-- Data -->
                                     <td>
                                         <span class="text-muted fs-8 text-truncate mw-300px">
-                                            <?= $mask->maskTelefone($resC->getContatoCliente()) ?>
+                                            <?= $mask->Data($resG['CREATE_AT']) ?>
                                         </span>
                                     </td>
-
-                                    <!-- CNPJ -->
-                                    <td>
-                                        <i class="ki-outline ki-switch fs-4"></i>
-                                        <?= $mask->formatarCnpj($resC->getCnpj()) ?>
-                                    </td>
-
-                                    <!-- Status -->
-                                    <?php $badgeColor = ($resC->getStatus() === 'ativo') ? 'status-active' : 'status-inactive'; ?>
-
-                                    <td>
-                                        <button 
-                                            type="button"
-                                            class="status-filter status-badge kt-badge-sm uppercase cursor-pointer <?= $badgeColor ?>"
-                                            data-filter-key="status"
-                                            data-filter-value="<?= $resC->getStatus() ?>"
-                                        >
-                                            <?= $resC->getStatus() ?>
-                                        </button>
-                                    </td>
-
 
                                     <!-- Ações -->
                                     <td class="text-end">
                                         <form method="POST" class="d-inline">
                                             <div class="flex justify-end items-center gap-2">
                                                 <input type="hidden" name="current_section" class="current-section-input">
-                                                <input type="hidden" name="unique_id" value="<?= base64_encode($resC->getUniqueId()) ?>">
+                                                <input type="hidden" name="unique_id" value="<?= base64_encode($resG['unique_id']) ?>">
 
-                                                <!-- button do modal de edição do frame -->
-                                                <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/edit?iframe=customerEdit&customer_unique=".base64_encode($resC->getUniqueId()), "Editar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
-
-                                                <input
-                                                    type="hidden"
-                                                    name="switch_status"
-                                                    value="<?= $resC->getStatus() === 'ativo' ? 'bt_active' : 'bt_inactive' ?>"
-                                                >    
-
-                                                <input
-                                                    type="checkbox"
-                                                    value="<?= $resC->getStatus() ?>"
-                                                    class="kt-switch kt-switch-sm menu-button switch"
-                                                    <?= $resC->getStatus() === 'ativo' ? 'checked' : '' ?>
-                                                    onclick="this.form.submit();"
-                                                >
-
+                                                <!-- verificar se tem alguma ligação, se não houver, poderar excluir (ainda não feito)-->
                                                 <button
                                                     type="submit"
-                                                    name="delete_bi"
-                                                    onclick="return confirm('Tem certeza que deseja excluir este painel?')"
+                                                    name="delete_glass"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este tipo de vidro?')"
                                                     class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
                                                     title="Excluir"
                                                 >
                                                     <i class="ki-outline ki-trash fs-4"></i>
-                                                </button>
+                                                </button> 
 
                                             </div>
                                             

@@ -39,8 +39,8 @@ CREATE TABLE `clientes` (
   `nome_cliente` varchar(60) NOT NULL,
   `contato_cliente` int(11) DEFAULT NULL,
   `cnpj_cliente` int(11) DEFAULT NULL,
-  `gm_cliente` varchar(5) DEFAULT 'nao',
-  `status_cliente` varchar(15) DEFAULT 'ativo',
+  `gm_cliente` ENUM('sim', 'nâo') DEFAULT 'nâo',
+  `status_cliente` ENUM('ativo', 'inativo') DEFAULT 'ativo',
   `unique_id` varchar(36) DEFAULT uuid(),
   `CREATE_AT` datetime NOT NULL DEFAULT current_timestamp(),
   `UPDATE_AT` datetime NOT NULL
@@ -49,32 +49,31 @@ CREATE TABLE `clientes` (
 CREATE TABLE pedidos (
 	id_pedido int primary key not null AUTO_INCREMENT,
   num_pedido int unique not null,
+  `unique_id` varchar(36) DEFAULT uuid(),
   create_at datetime not null DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE marcador (
-	id_marcador int PRIMARY key not null AUTO_INCREMENT,
-    nome_marcador varchar(30) not null,
-    turno_marcador ENUM('DIA', 'NOITE') DEFAULT 'DIA',
-    CREATE_AT datetime not null DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE conferente (
 	id_conferente int PRIMARY key not null AUTO_INCREMENT,
     nome_conferente varchar(30) not null,
     turno_conferente ENUM('DIA', 'NOITE') DEFAULT 'DIA',
+    tipo_conferente ENUM('marcador', 'conferente') DEFAULT 'marcador',
+    status_conferente ENUM('ativo', 'inativo') DEFAULT 'ativo',
+    `unique_id` varchar(36) DEFAULT uuid(),
     CREATE_AT datetime not null DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE tipo_vidro (
 	id_vidro int PRIMARY key not null AUTO_INCREMENT,
     tipo_vidro varchar(30) not null,
+    `unique_id` varchar(36) DEFAULT uuid(),
     CREATE_AT datetime not null DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE espessura (
 	id_espessura int PRIMARY key not null AUTO_INCREMENT,
     tam_espessura varchar(6) not null,
+    `unique_id` varchar(36) DEFAULT uuid(),
     CREATE_AT datetime not null DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -93,8 +92,6 @@ CREATE TABLE peca (
     data_protocolo datetime not null DEFAULT CURRENT_TIMESTAMP,
     motivo_id int not null,
     FOREIGN KEY (motivo_id) REFERENCES motivo(id_motivo),
-    marcador_id int not null,
-    FOREIGN KEY (marcador_id) REFERENCES marcador(id_marcador),
     conferente_id int not null,
     FOREIGN KEY (conferente_id) REFERENCES conferente(id_conferente),
     data_erro varchar(26) DEFAULT null,
@@ -108,6 +105,7 @@ CREATE TABLE peca (
     altura_peca int not null,
     largura_peca int not null,
     m2_peca DECIMAL(10,4) AS ((altura_peca * largura_peca) / 10000) STORED,
+    `unique_id` varchar(36) DEFAULT uuid(),
     CREATE_AT datetime not null,
     UPDATE_AT datetime not null DEFAULT CURRENT_TIMESTAMP
 );

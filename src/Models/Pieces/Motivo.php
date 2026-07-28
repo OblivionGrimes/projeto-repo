@@ -1,15 +1,17 @@
 <?php
 
-namespace src\Models;
+namespace src\Models\Pieces;
 
-class Pieces {
+class Motivo {
 
+    private string $id_motivo;
     private string $unique_id;
     private string $motivo;
     private string $CREATE_AT;
 
     public function __construct(array $data = []){
         if($data){
+            $this->id_motivo = $data['id_motivo'] ?? null;
             $this->unique_id = $data['unique_id'] ?? null;
             $this->motivo = $data['motivo'] ?? null;
             $this->CREATE_AT = $data['CREATE_AT'] ?? null;
@@ -17,6 +19,14 @@ class Pieces {
     }
 
     // --- GETTERS & SETTERS ---
+    public function getIdMotivo() {
+        return $this->id_motivo;
+    }
+    public function setIdMotivo(string $id_motivo) {
+        $this->id_motivo = $id_motivo;
+        return $this;
+    }
+
     public function getUniqueId() {
         return $this->unique_id;
     }

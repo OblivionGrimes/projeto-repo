@@ -157,8 +157,8 @@
 
                                                 <button
                                                     type="submit"
-                                                    name="delete_bi"
-                                                    onclick="return confirm('Tem certeza que deseja excluir este painel?')"
+                                                    name="delete_customer"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
                                                     class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
                                                     title="Excluir"
                                                 >
