@@ -48,7 +48,7 @@ class PiecesRepository extends QueryRepository
     public function getAllPiecesByMotiveId(int $motive_id): array
     {
         try {
-            $stmt = $this->select('pecas', '*', 'id_motivo = ' . $motive_id, '', '', true);
+            $stmt = $this->select('pecas', '*', 'motivo_id = ' . $motive_id, '', '', true);
             return $stmt;
         } catch (PDOException $e) {
             // Log the error message for debugging purposes
@@ -69,10 +69,10 @@ class PiecesRepository extends QueryRepository
         }
     }
 
-    public function createGlass(string $data): bool
+    public function createGlass(string $nomeGlass): bool
     {
         try {
-            $stmt = $this->insert('tipo_vidro', 'tipo_vidro', $data);
+            $stmt = $this->insert('tipo_vidro', 'tipo_vidro', $nomeGlass);
             return $stmt;
         } catch (PDOException $e) {
             // Log the error message for debugging purposes
@@ -93,10 +93,22 @@ class PiecesRepository extends QueryRepository
         }
     }
 
-    public function getAllMarkers(): array
+    public function getGlassByUniqueId(string $unique_id): ?array
     {
         try {
-            $stmt = $this->select('conferente', '*', '', '', '', true);
+            $stmt = $this->select('tipo_vidro', '*', 'unique_id = ' . $unique_id . ' ', '', '', false);
+            return $stmt;
+        } catch (PDOException $e) {
+            // Log the error message for debugging purposes
+            error_log("Database error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getAllPiecesByGlassId(int $glass_id): array
+    {
+        try {
+            $stmt = $this->select('pecas', '*', 'vidro_id = ' . $glass_id, '', '', true);
             return $stmt;
         } catch (PDOException $e) {
             // Log the error message for debugging purposes
@@ -104,5 +116,18 @@ class PiecesRepository extends QueryRepository
             return [];
         }
     }
+
+    public function deleteGlass(string $unique_id): bool
+    {
+        try {
+            $stmt = $this->delete('tipo_vidro', 'unique_id = ' . $unique_id . ' ');
+            return $stmt;
+        } catch (PDOException $e) {
+            // Log the error message for debugging purposes
+            error_log("Database error: " . $e->getMessage());
+            return false;
+        }
+    }
+
     
 }

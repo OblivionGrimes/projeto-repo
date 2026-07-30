@@ -2,7 +2,7 @@
 
 <?php
 
-    $markers = $piecesRepository->getAllMarkers();
+    $markers = $UserRepository->getAllMarkers();
 
 ?>
 
@@ -56,7 +56,10 @@
                             <tr class="text-gray-500 fw-semibold fs-7 text-uppercase">
                                 <th>Nº</th>
                                 <th>Conferente/Marcador</th>
+                                <th>Turno</th>
+                                <th>Tipo</th>
                                 <th>Data</th>
+                                <th>Status</th>
                                 <th class="text-end">Ações</th>
                             </tr>
                         </thead>
@@ -82,9 +85,23 @@
                                         <a class="text-muted fs-8 text-truncate mw-300px d-inline-block">
                                             <i class="ki-outline ki-exit-right-corner fs-4"></i>
                                             <span class="texto-permissao">
-                                                <?= ucfirst($resM['conferente']); ?>
+                                                <?= ucfirst($resM['nome_conferente']); ?>
                                             </span>
                                         </a>
+                                    </td>
+
+                                    <!-- turno -->
+                                    <td>
+                                        <span class="texto-permissao">
+                                            <?= ucfirst($resM['turno_conferente']); ?>
+                                        </span>
+                                    </td>
+
+                                    <!-- tipo -->
+                                    <td>
+                                        <span class="texto-permissao">
+                                            <?= ucfirst($resM['tipo_conferente']); ?>
+                                        </span>
                                     </td>
 
                                     <!-- Data -->
@@ -94,6 +111,21 @@
                                         </span>
                                     </td>
 
+                                    <?php $badgeColor = ($resM['status_conferente'] === 'ativo') ? 'status-active' : 'status-inactive'; ?>
+
+                                    <!-- Status -->
+                                    <td>
+                                        <button 
+                                            type="button"
+                                            class="status-filter status-badge kt-badge-sm uppercase cursor-pointer <?= $badgeColor ?>"
+                                            data-filter-key="status"
+                                            data-filter-value="<?= $resM['status_conferente'] ?>"
+                                        >
+                                            <?= $resM['status_conferente'] ?>
+                                        </button>
+                                    </td>
+
+
                                     <!-- Ações -->
                                     <td class="text-end">
                                         <form method="POST" class="d-inline">
@@ -101,10 +133,21 @@
                                                 <input type="hidden" name="current_section" class="current-section-input">
                                                 <input type="hidden" name="unique_id" value="<?= base64_encode($resM['unique_id']) ?>">
 
-                                                <div class="flex flex-col gap-2">
-                                                    <?php echo $forms->label("BT_GM_STATUS", "Faz parte do grupo GM?", "kt-form-label pb-2"); ?>
-                                                    <?php echo $forms->input_switch("BT_GM_STATUS" ,'', "sim"); ?>
-                                                </div>
+                                                <!-- ativar e desativar conferente/marcador -->
+                                                <input
+                                                    type="hidden"
+                                                    name="switch_status_marker"
+                                                    value="<?= $resM['status_conferente'] === 'ativo' ? 'bt_active' : 'bt_inactive' ?>"
+                                                >    
+
+                                                <input
+                                                    type="checkbox"
+                                                    value="<?= $resM['status_conferente'] ?>"
+
+                                                    class="kt-switch kt-switch-sm menu-button switch"
+                                                    <?= $resM['status_conferente'] === 'ativo' ? 'checked' : '' ?>
+                                                    onclick="this.form.submit();"
+                                                >
 
                                                 <!-- verificar se tem alguma ligação, se não houver, poderar excluir (ainda não feito)-->
                                                 <button
