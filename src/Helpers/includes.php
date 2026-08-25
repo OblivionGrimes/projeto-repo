@@ -34,6 +34,10 @@ require_once __DIR__ . '/../../src/Repositories/CustomerRepository.php';
 use src\Repositories\CustomerRepository;
 $CustomerRepository = new CustomerRepository();
 
+require_once __DIR__ . '/../../src/Repositories/piecesRepository.php';
+use src\Repositories\PiecesRepository;
+$piecesRepository = new PiecesRepository();
+
 
 /* -- MODELOS -- */
 require_once __DIR__ . '/../../src/Models/User.php';

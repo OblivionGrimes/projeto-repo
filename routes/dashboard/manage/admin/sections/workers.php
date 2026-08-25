@@ -1,4 +1,4 @@
-<!-- section de clientes -->
+<!-- section de funcionarios -->
 
 <?php
 
@@ -7,7 +7,7 @@
 ?>
 
 
-<section id="section-customers" class="admin-section">
+<section id="section-workers" class="admin-section">
     <div class="col-xl-6 padding-5">
         <div class="kt-card h-100 shadow-md">
 
@@ -16,7 +16,7 @@
                 <div class="kt-card-title">
                     <h3 class="fw-bold">
                         <i class="ki-outline ki-tablet fs-2 text-primary me-2"></i>
-                        Clientes 
+                        Funcionários (Parado ainda)
                     </h3>
                 </div>
 
@@ -44,6 +44,7 @@
                     <!-- button do modal de criação do companies-->
                     <?= $forms->buttonDrawer("kt_companies_drawer", BASE_URL."d/manage/customers/index?iframe=customers", "Adicionar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar cliente") ?>
 
+                    <!-- Por enquanto não necessario este botão -->
                     <button
                         type="button"
                         class="button menu-button permissions kt-btn kt-btn-sm rounded-full hidden"
@@ -157,8 +158,8 @@
 
                                                 <button
                                                     type="submit"
-                                                    name="delete_customer"
-                                                    onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
+                                                    name="delete_bi"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este painel?')"
                                                     class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
                                                     title="Excluir"
                                                 >

@@ -28,7 +28,7 @@
                 </li>
 
                 <li>
-                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                    <a href="#" data-target="section-relatorios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
                         <i class="ki-outline ki-users fs-5 text-gray-500"></i>
                         <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Relatórios</span>
                     </a>
@@ -51,23 +51,30 @@
                             <div class="kt-menu-dropdown py-2 kt-scrollable-y">
 
                                 <div class="kt-menu-item ">
-                                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
-                                        <!-- <i class="ki-outline ki-users fs-5 text-gray-500"></i> -->
-                                        <span class="text-sm kt-menu-title whitespace-nowrap transition-opacity duration-200">Relatórios</span>
+                                    <a href="#" data-target="section-marker" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                                        <i class="ki-outline ki-users fs-5 text-gray-500"></i> 
+                                        <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Conferente/Marcador</span>
                                     </a>
                                 </div>
 
                                 <div class="kt-menu-item active">
-                                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
-                                        <!-- <i class="ki-outline ki-users fs-5 text-gray-500"></i> -->
-                                        <span class="text-sm kt-menu-title whitespace-nowrap transition-opacity duration-200">Relatórios</span>
+                                    <a href="#" data-target="section-motive" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                                        <i class="ki-outline ki-pencil fs-5 text-gray-500"></i> 
+                                        <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Motivos</span>
                                     </a>
                                 </div>
 
                                 <div class="kt-menu-item">
-                                    <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
-                                        <!-- <i class="ki-outline ki-users fs-5 text-gray-500"></i> -->
-                                        <span class="text-sm kt-menu-title whitespace-nowrap transition-opacity duration-200">Relatórios</span>
+                                    <a href="#" data-target="section-glass" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                                        <i class="ki-outline ki-size fs-5 text-gray-500"></i> 
+                                        <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Tipo vidro</span>
+                                    </a>
+                                </div>
+
+                                <div class="kt-menu-item">
+                                    <a href="#" data-target="section-workers" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
+                                        <i class="ki-outline ki-people fs-5 text-gray-500"></i> 
+                                        <span class="text-sm sidebar-text whitespace-nowrap transition-opacity duration-200">Usuários</span>
                                     </a>
                                 </div>
 
@@ -85,10 +92,16 @@
     <main class="flex-1 flex-col pb-10">
         <div class="kt-container kt-container-fluid pt-5">
 
-        <!-- Incluir as sections aqui depois -->
-
+        <!-- section de clientes -->
         <?php include __DIR__ . '/sections/customers.php' ?>
-        
+        <!-- section de conferentes/marcadores -->
+        <?php include __DIR__ . '/sections/marker.php' ?>
+        <!-- section de motivos -->
+        <?php include __DIR__ . '/sections/motive.php' ?>
+        <!-- section de tipos de vidros -->
+        <?php include __DIR__ . '/sections/glass.php' ?>
+        <!-- section de funcionarios -->
+        <?php include __DIR__ . '/sections/workers.php' ?>
 
         </div>
     </main>
