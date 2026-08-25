@@ -17,7 +17,7 @@
                     </h3>
                 </div>
 
-                <!-- iframe de criação do frame -->
+                <!-- iframe de criação da reposição -->
                 <?= $forms->drawerI('kt_aberto_drawer', 'kt-drawer kt-drawer-end flex-col w-[520px] top-5 bottom-5 end-5 rounded-xl flex hidden', 
                     'companies-drawer', 'kt_aberto_drawer_close') ?>
 
@@ -38,7 +38,7 @@
 
                 <div class="flex items-center gap-2">
 
-                    <!-- button do modal de criação do companies-->
+                    <!-- button do modal de criação da reposição-->
                     <?= $forms->buttonDrawer("kt_aberto_drawer", BASE_URL."d/manage/pieces/index?iframe=pieces", "Adicionar peça", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-plus-circle fs-4", "Adicionar peça") ?>
 
                     <button
@@ -62,17 +62,19 @@
                     <table class="kt-table table-auto kt-table-border align-middle">
                         <thead>
                             <tr class="text-gray-500 fw-semibold fs-7 text-uppercase">
-                                <th>Nº Cliente</th>
-                                <th>Cliente</th>
-                                <th>Contato</th>
-                                <th>CNPJ</th>
-                                <th>Status</th>
+                                <th>Nº Peça</th>
+                                <th>Nº Pedido</th>
+                                <th>Motivo</th>
+                                <th>Tipo</th>
+                                <th>Comprimento</th>
+                                <th>Setor</th>
+                                <th>Data</th>
                                 <th class="text-end">Ações</th>
                             </tr>
                         </thead>
 
                         <tbody class="fw-semibold text-gray-700" id="frames-table" data-filter-scope>
-                            <!-- Foreach aquiiiiiii -->
+
                                 <?php
                                     foreach ($customers as $resC):
                                     #$empresa = $EnterpriseRepository->getEnterpriseById($frame->getEmpresaId())[0];
@@ -80,17 +82,16 @@
                                     #$empresaNome = $empresa->getNameEmpresa();
                                 ?>
 
-                                <tr data-empresa-nome="<?= htmlspecialchars('teste') ?>"
-                                    data-status="<?= 'Ativo' ?>">
+                                <tr class="odd:bg-gray-50 even:bg-white hover:bg-gray-100 transition-colors duration-200" data-filter-row>
 
-                                    <!-- Numero cliente -->
+                                    <!-- Nº Peça -->
                                     <td>
                                         <span>
                                             <?= $resC->getNumeroCliente() ?>
                                         </span>
                                     </td>
 
-                                    <!-- nome cliente -->
+                                    <!-- Nº Pedido -->
                                     <td>
                                         <a class="text-muted fs-8 text-truncate mw-300px d-inline-block">
                                             <i class="ki-outline ki-exit-right-corner fs-4"></i>
@@ -100,33 +101,37 @@
                                         </a>
                                     </td>
 
-                                    <!-- Contato -->
+                                    <!-- Motivo -->
                                     <td>
                                         <span class="text-muted fs-8 text-truncate mw-300px">
                                             <?= $mask->maskTelefone($resC->getContatoCliente()) ?>
                                         </span>
                                     </td>
 
-                                    <!-- CNPJ -->
+                                    <!-- Tipo -->
                                     <td>
                                         <i class="ki-outline ki-switch fs-4"></i>
                                         <?= $mask->formatarCnpj($resC->getCnpj()) ?>
                                     </td>
 
-                                    <!-- Status -->
-                                    <?php $badgeColor = ($resC->getStatus() === 'ativo') ? 'status-active' : 'status-inactive'; ?>
-
+                                    <!-- Comprimento -->
                                     <td>
-                                        <button 
-                                            type="button"
-                                            class="status-filter status-badge kt-badge-sm uppercase cursor-pointer <?= $badgeColor ?>"
-                                            data-filter-key="status"
-                                            data-filter-value="<?= $resC->getStatus() ?>"
-                                        >
-                                            <?= $resC->getStatus() ?>
-                                        </button>
+                                        <span class="text-muted fs-8 text-truncate mw-300px">
+                                            <?= $mask->maskTelefone($resC->getContatoCliente()) ?>
+                                        </span>
                                     </td>
 
+                                    <!-- Setor -->
+                                    <td>
+                                        <i class="ki-outline ki-switch fs-4"></i>
+                                        <?= $mask->formatarCnpj($resC->getCnpj()) ?>
+                                    </td>
+
+                                    <!-- Data erro -->
+                                    <td>
+                                        <i class="ki-outline ki-switch fs-4"></i>
+                                        <?= $mask->formatarCnpj($resC->getCnpj()) ?>
+                                    </td>
 
                                     <!-- Ações -->
                                     <td class="text-end">
@@ -135,32 +140,11 @@
                                                 <input type="hidden" name="current_section" class="current-section-input">
                                                 <input type="hidden" name="unique_id" value="<?= base64_encode($resC->getUniqueId()) ?>">
 
-                                                <!-- button do modal de edição do frame -->
+                                                <!-- button do modal de edição da reposição -->
                                                 <?= $forms->buttonDrawer("kt_aberto_drawer", BASE_URL."d/manage/customers/edit?iframe=customerEdit&customer_unique=".base64_encode($resC->getUniqueId()), "Editar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>
 
-                                                <input
-                                                    type="hidden"
-                                                    name="switch_status"
-                                                    value="<?= $resC->getStatus() === 'ativo' ? 'bt_active' : 'bt_inactive' ?>"
-                                                >    
-
-                                                <input
-                                                    type="checkbox"
-                                                    value="<?= $resC->getStatus() ?>"
-                                                    class="kt-switch kt-switch-sm menu-button switch"
-                                                    <?= $resC->getStatus() === 'ativo' ? 'checked' : '' ?>
-                                                    onclick="this.form.submit();"
-                                                >
-
-                                                <button
-                                                    type="submit"
-                                                    name="delete_bi"
-                                                    onclick="return confirm('Tem certeza que deseja excluir este painel?')"
-                                                    class="kt-btn kt-btn-icon kt-btn-destructive kt-btn-sm"
-                                                    title="Excluir"
-                                                >
-                                                    <i class="ki-outline ki-trash fs-4"></i>
-                                                </button>
+                                                <!-- button do modal de mais informações -->   
+                                                <?= $forms->buttonDrawer("kt_aberto_drawer", BASE_URL."d/manage/customers/edit?iframe=customerEdit&customer_unique=".base64_encode($resC->getUniqueId()), "Editar cliente", "button menu-button permissions kt-btn kt-btn-sm rounded-full", "ki-outline ki-pencil fs-4", "", "Editar painel") ?>                                                
 
                                             </div>
                                             

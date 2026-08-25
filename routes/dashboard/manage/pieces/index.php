@@ -1,4 +1,24 @@
 <!-- create do home -->
+
+<?php
+
+    $tipo_vidro = $piecesRepository->getAllGlass();
+    $optionsVidro = array_column($tipo_vidro, 'tipo_vidro', 'unique_id');
+
+    $motivos = $piecesRepository->getAllMotives();
+    $optionsMotivo = array_column($motivos, 'motivo', 'unique_id');
+
+    $espessuras = $piecesRepository->getAllEspessuras();
+    $optionsEspessuras = array_column($espessuras, 'tam_espessura', 'unique_id');
+
+    $clientes = $CustomerRepository->getAllCustomers();
+    $optionsClientes = [];
+    foreach ($clientes as $cliente) {
+        $optionsClientes[$cliente->getUniqueId()] = $cliente->getNameCliente();
+    }
+
+
+?>
  
 <div class="flex flex-col grow kt-scrollable-y-auto lg:[--kt-scrollbar-width:auto] bg-white ">
 
@@ -24,23 +44,40 @@
                         <div class="grid gap-5">
                             
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("numero_cliente", "Número do Cliente", "kt-form-label pb-2 required"); ?>
-                                <?php echo $forms->input("number", "numero_cliente", "numero_cliente", "", "Digite o número que consta no sistema", "kt-input w-full", "", true); ?>
+                                <!-- adicionar uma verificação para um hifen '******-***' -->
+                                <?php echo $forms->label("numero_peca", "Nº da peça", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->input("number", "numero_peca", "numero_peca", "", "Digite o número da peça", "kt-input w-full", "", true); ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("nome_cliente", "Nome do Cliente", "kt-form-label pb-2 required"); ?>
-                                <?php echo $forms->input("text", "nome_cliente", "nome_cliente", "", "Digite o nome do cliente", "kt-input w-full", "", true); ?>
+                                <?php echo $forms->label("nome_cliente", "Nome do cliente", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->inputSelect("nome_cliente", "nome_cliente", $optionsClientes, "", true) ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("contato_cliente", "Contato do Cliente", "kt-form-label pb-2"); ?>
-                                <?php echo $forms->inputTel("tel", "contato_cliente", "contato_cliente", "", "Digite o telefone (somente números)", "[0-9]{10,11}", "11", "kt-input w-full", false) ?>
+                                <?php echo $forms->label("numero_pedido", "Nº do pedido", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->input("text", "numero_pedido", "numero_pedido", "", "Digite o número do pedido", "kt-input w-full", "", true); ?>
                             </div>
-                            
+
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("cnpj", "CNPJ", "kt-form-label pb-2"); ?>
-                                <?php echo $forms->input("text", "cnpj", "cnpj", "", "00.000.000/0000-00", "kt-input w-full", "18", false); ?>
+                                <?php echo $forms->label("motivo_id", "Motivo da reposição", "kt-form-label pb-2"); ?>
+                                <?php echo $forms->inputSelect("motivo_id", "motivo_id", $optionsMotivo, "", true) ?>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <?php echo $forms->label("vidro_id", "Tipo do vidro", "kt-form-label pb-2"); ?>
+                                <?php echo $forms->inputSelect("vidro_id", "vidro_id", $optionsVidro, "", true) ?>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <?php echo $forms->label("espessura_id", "Espessura", "kt-form-label pb-2"); ?>
+                                <?php echo $forms->inputSelect("espessura_id", "espessura_id", $optionsEspessuras, "", true) ?>
+                            </div>
+
+                            <!-- Usar o explode no x, fazer uma maskara para verificar se esta conforme -->
+                            <div class="flex flex-col gap-2">
+                                <?php echo $forms->label("altura_largura", "Dimensões", "kt-form-label pb-2"); ?>
+                                <?php echo $forms->input("text", "altura_largura", "altura_largura", "", "Digite com o 'X'   '****X****' ", "kt-input w-full", "", true) ?>
                             </div>
 
                             <div class="flex justify-end pt-2">
@@ -63,3 +100,25 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); 
+
+            const alturaLarguraInput = document.getElementById("altura_largura");
+            const alturaLarguraValue = alturaLarguraInput.value.trim();
+
+            const regex = /^\d+X\d+$/;
+            if (!regex.test(alturaLarguraValue)) {
+                alert("Por favor, insira a Altura X Largura no formato correto (ex: 1234X5678).");
+                return;
+            }
+
+            form.submit(); 
+        });
+    });
+
+</script>
