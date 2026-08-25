@@ -1,18 +1,12 @@
 {
-    "name": "mathe/projeto-repo",
+    "name": "matheusjesus/projeto-repo",
     "autoload": {
         "psr-4": {
-            "Mathe\\ProjetoRepo\\": "src/"
+            "Matheusjesus\\ProjetoRepo\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "OblivionGrimes",
-            "email": "matheussantos.00@outlook.com"
-        }
-    ],
     "require": {
-        "phpmailer/phpmailer": "^7.0",
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "phpmailer/phpmailer": "^7.1"
     }
 }

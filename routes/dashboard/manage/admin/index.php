@@ -48,7 +48,7 @@
                                 <i class="ki-filled ki-down text-xs ms-auto"></i>
                             </button>
 
-                            <div class="kt-menu-dropdown py-2 kt-scrollable-y " style="sidebar-dropdown-width;">
+                            <div class="kt-menu-dropdown py-2 kt-scrollable-y">
 
                                 <div class="kt-menu-item ">
                                     <a href="#" data-target="section-usuarios" class="sidebar-link flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 group">
