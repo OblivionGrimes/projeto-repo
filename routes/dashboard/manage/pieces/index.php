@@ -44,9 +44,14 @@
                         <div class="grid gap-5">
                             
                             <div class="flex flex-col gap-2">
-                                <!-- adicionar uma verificação para um hifen '******-***' -->
                                 <?php echo $forms->label("numero_peca", "Nº da peça", "kt-form-label pb-2 required"); ?>
-                                <?php echo $forms->input("number", "numero_peca", "numero_peca", "", "Digite o número da peça", "kt-input w-full", "", true); ?>
+                                <?php echo $forms->input("text", "numero_peca", "numero_peca", "", "Digite o número da peça", "kt-input w-full", "", true); ?>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <!-- adicionar no banco de dados o numero do pedido cliente -->
+                                <?php echo $forms->label("pedido_cliente", "Nº do pedido Cliente", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->input("text", "pedido_cliente", "pedido_cliente", "", "Digite o número do pedido cliente", "kt-input w-full", "", true); ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
@@ -102,6 +107,30 @@
 </div>
 
 <script>
+
+    // Adicionando máscara para o campo de número da peça 
+
+    document.addEventListener("DOMContentLoaded", function(){
+        const form = document.querySelector("form");
+        
+        const inputMask = form.querySelector("#numero_peca"); 
+
+        inputMask.addEventListener("input", function(evento) {
+            
+            let valor = evento.target.value;
+
+            valor = valor.replace(/\D/g, "");
+
+            if (valor.length > 6) {
+                valor = valor.slice(0, 6) + "-" + valor.slice(6);
+            }
+
+            evento.target.value = valor;
+        });
+    });
+
+
+    // Adicionando máscara para o campo de dimensões
 
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.querySelector("form");
