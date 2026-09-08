@@ -16,6 +16,7 @@ class Database {
     private string $username;
     private string $databasepassword;
     private string $databaseName;
+    private string $port;
 
     public function __construct() {
 
@@ -26,8 +27,11 @@ class Database {
         $this->username = $_ENV['DB_USERNAME'];
         $this->databasepassword = $_ENV['DB_PASSWORD'];
         $this->databaseName = $_ENV['DB_DATABASE'];
+        $this->port = $_ENV['PORT'] ?? null;
 
-        $dsn = "mysql:host={$this->host};dbname={$this->databaseName};charset=utf8mb4";
+        $porta = !empty($this->port) ? "port={$this->port};" : '';
+
+        $dsn = "mysql:host={$this->host};{$porta}dbname={$this->databaseName};charset=utf8mb4";
 
         try {
             $this->mysqlConnection = new PDO(

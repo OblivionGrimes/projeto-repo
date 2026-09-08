@@ -17,7 +17,7 @@ use Config\Config;
 class LoginRepository extends QueryRepository{
 
     
-    public function autenticarUsuario(string $email, string $password): ?User
+    public function autenticarUsuario(string $email, string $password): String | User | null
     {
         $config = new Config();
 
@@ -30,7 +30,7 @@ class LoginRepository extends QueryRepository{
             if ($resultado === false) {
                 return null;
             }
-            if (empty($resultado['password_hash']) || !password_verify($password, $resultado['password_hash']) ) {
+            if (empty($resultado['password_hash']) || !password_verify($password, trim($resultado['password_hash'])) ) {
                 return null;
             }
 
