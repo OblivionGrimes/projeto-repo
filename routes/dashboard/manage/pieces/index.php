@@ -1,25 +1,51 @@
-<!-- create do home -->
+<!-- create peça do home/em aberto -->
 
 <?php
 
-    $tipo_vidro = $piecesRepository->getAllGlass();
-    $optionsVidro = array_column($tipo_vidro, 'tipo_vidro', 'unique_id');
+$tipo_vidro = $piecesRepository->getAllGlass();
+$optionsVidro = array_column($tipo_vidro, 'tipo_vidro', 'unique_id');
 
-    $motivos = $piecesRepository->getAllMotives();
-    $optionsMotivo = array_column($motivos, 'motivo', 'unique_id');
+$motivos = $piecesRepository->getAllMotives();
+$optionsMotivo = array_column($motivos, 'motivo', 'unique_id');
 
-    $espessuras = $piecesRepository->getAllEspessuras();
-    $optionsEspessuras = array_column($espessuras, 'tam_espessura', 'unique_id');
+$espessuras = $piecesRepository->getAllEspessuras();
+$optionsEspessuras = array_column($espessuras, 'tam_espessura', 'unique_id');
 
-    $clientes = $CustomerRepository->getAllCustomers();
-    $optionsClientes = [];
-    foreach ($clientes as $cliente) {
-        $optionsClientes[$cliente->getUniqueId()] = $cliente->getNameCliente();
-    }
+$clientes = $CustomerRepository->getAllCustomers();
+$optionsClientes = [];
+foreach ($clientes as $cliente) {
+    $optionsClientes[$cliente->getUniqueId()] = $cliente->getNameCliente();
+}
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro_reposicao'])) {
+    $numero_peca = $_POST['numero_peca'];
+    $pedido_cliente = $_POST['pedido_cliente'];
+    $nome_cliente = $_POST['nome_cliente'];
+    $numero_pedido = $_POST['numero_pedido'];
+    $motivo_id = $_POST['motivo_id'];
+    $vidro_id = $_POST['vidro_id'];
+    $espessura_id = $_POST['espessura_id'];
+    $altura_largura = $_POST['altura_largura'];
+
+    // Chamar a função para criar a peça
+    $teste = $piecesRepository->createPiece([
+        'numero_peca' => $numero_peca,
+        'pedido_cliente' => $pedido_cliente,
+        'nome_cliente' => $nome_cliente,
+        'numero_pedido' => $numero_pedido,
+        'motivo_id' => $motivo_id,
+        'vidro_id' => $vidro_id,
+        'espessura_id' => $espessura_id,
+        'altura_largura' => $altura_largura
+    ]);
+
+    $config->alerta_toast("Peça cadastrada com sucesso!", 1);
+}else{
+    $config->alerta_toast("Erro ao cadastrar peça.",0);
+}
 
 ?>
- 
+
 <div class="flex flex-col grow kt-scrollable-y-auto lg:[--kt-scrollbar-width:auto] bg-white ">
 
     <div class="kt-container kt-container-fluid">
@@ -42,7 +68,7 @@
                         <?php echo $forms->formI("POST"); ?>
 
                         <div class="grid gap-5">
-                            
+
                             <div class="flex flex-col gap-2">
                                 <?php echo $forms->label("numero_peca", "Nº da peça", "kt-form-label pb-2 required"); ?>
                                 <?php echo $forms->input("text", "numero_peca", "numero_peca", "", "Digite o número da peça", "kt-input w-full", "", true); ?>
@@ -50,12 +76,12 @@
 
                             <div class="flex flex-col gap-2">
                                 <!-- adicionar no banco de dados o numero do pedido cliente -->
-                                <?php echo $forms->label("pedido_cliente", "Nº do pedido Cliente", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->label("pedido_cliente", "Nº pedido Cliente", "kt-form-label pb-2 required"); ?>
                                 <?php echo $forms->input("text", "pedido_cliente", "pedido_cliente", "", "Digite o número do pedido cliente", "kt-input w-full", "", true); ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("nome_cliente", "Nome do cliente", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->label("nome_cliente", "Cliente", "kt-form-label pb-2 required"); ?>
                                 <?php echo $forms->inputSelect("nome_cliente", "nome_cliente", $optionsClientes, "", true) ?>
                             </div>
 
@@ -85,13 +111,15 @@
                                 <?php echo $forms->input("text", "altura_largura", "altura_largura", "", "Digite com o 'X'   '****X****' ", "kt-input w-full", "", true) ?>
                             </div>
 
+                            <!-- adicionar campo de observações -->
+
                             <div class="flex justify-end pt-2">
                                 <?php echo $forms->button(
-                                    "submit", 
-                                    "registro_cliente", 
-                                    "registro_cliente", 
-                                    "button menu-button permissions kt-btn kt-btn-sm rounded-full", 
-                                    "ki-outline ki-cloud-add", 
+                                    "submit",
+                                    "registro_reposicao",
+                                    "registro_reposicao",
+                                    "button menu-button permissions kt-btn kt-btn-sm rounded-full",
+                                    "ki-outline ki-cloud-add",
                                     "CADASTRAR"
                                 ); ?>
                             </div>
@@ -107,16 +135,15 @@
 </div>
 
 <script>
-
     // Adicionando máscara para o campo de número da peça 
 
-    document.addEventListener("DOMContentLoaded", function(){
+    document.addEventListener("DOMContentLoaded", function() {
         const form = document.querySelector("form");
-        
-        const inputMask = form.querySelector("#numero_peca"); 
+
+        const inputMask = form.querySelector("#numero_peca");
 
         inputMask.addEventListener("input", function(evento) {
-            
+
             let valor = evento.target.value;
 
             valor = valor.replace(/\D/g, "");
@@ -135,7 +162,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const form = document.querySelector("form");
         form.addEventListener("submit", function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
 
             const alturaLarguraInput = document.getElementById("altura_largura");
             const alturaLarguraValue = alturaLarguraInput.value.trim();
@@ -146,8 +173,7 @@
                 return;
             }
 
-            form.submit(); 
+            form.submit();
         });
     });
-
 </script>

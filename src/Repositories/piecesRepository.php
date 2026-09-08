@@ -147,5 +147,24 @@ class PiecesRepository extends QueryRepository
         }
     }
 
+
+    ################## Create reposição ####################
+    public function createPiece(array $data)
+    {
+        try {
+            // primeiro insert é na tabela pedidos
+            $pedido_id = $this->select('pedidos', 'id_pedido', 'num_pedido = ' . $data['numero_pedido'] . ' ', '', '', false);
+            if (!$pedido_id) {
+                $pedido_id = $this->insert('pedidos', 'num_pedido', "{$data['numero_pedido']}", true);
+            }
+
+            return $pedido_id;
+            
+        } catch (PDOException $e) {
+            // Log the error message for debugging purposes
+            error_log("Database error: " . $e->getMessage());
+            return false;
+        }
+    }
     
 }
