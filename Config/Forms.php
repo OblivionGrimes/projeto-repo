@@ -54,14 +54,14 @@ class Forms {
         string $id,
         array $options,
         string $selectedValue = '',
-        string $class = 'kt-input w-full',
-        bool|string $required = false,
+        bool $required = false,
         string $placeholder = 'Selecione uma opção...'
     ) {
-        $requiredAttr = $required === true ? 'required' : '';
+        $requiredAttr = $required ? 'required' : '';
 
-        $html  = '<select class="'.$class.'" name="'.$name.'" id="'.$id.'" '.$requiredAttr.'>';
-        $html .= '<option value="">'.$placeholder.'</option>';
+        $html  = '<div class="relative w-full">';
+        $html .= '<select class="kt-select-custom w-full" name="'.$name.'" id="'.$id.'" '.$requiredAttr.'>';
+        $html .= '<option value="" disabled '.($selectedValue === '' ? 'selected' : '').' style="display:none">'.$placeholder.'</option>';
 
         foreach ($options as $value => $label) {
             $selected = ($value == $selectedValue) ? 'selected' : '';
@@ -69,6 +69,10 @@ class Forms {
         }
 
         $html .= '</select>';
+        //$html .= '<div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">';
+        //$html .= '<i class="ki-filled ki-down text-gray-400 text-xs"></i>';
+        //$html .= '</div>';
+        $html .= '</div>';
 
         return $html;
     }

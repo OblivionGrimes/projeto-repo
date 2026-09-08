@@ -9033,6 +9033,36 @@
       padding-inline-end: calc(var(--spacing) * 2.5);
     }
 }
+
+@layer components {
+  .kt-select-custom {
+    display: block;
+    width: 100%;
+    height: calc(var(--spacing) * 8.5);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    border-color: var(--input);
+    border-radius: calc(var(--radius) - 2px);
+    background-color: var(--background);
+    color: var(--foreground);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-inline-end: calc(var(--spacing) * 8);
+    font-size: 0.8125rem;
+    line-height: var(--text-sm--line-height);
+    appearance: none;
+    --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .kt-select-custom:focus-visible {
+    border-color: var(--ring);
+    --tw-ring-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 30%, transparent);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+}
+
 @layer components {
   .kt-input:not(input) {
     display: flex;

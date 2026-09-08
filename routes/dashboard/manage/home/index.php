@@ -41,7 +41,7 @@
         <div class="kt-container kt-container-fluid pt-5">
 
         <!-- Aqui vai ser a parte principal do conteúdo, contendo as tables de reposições em aberto e etc. -->
-        <?php include __DIR__ . '/sections/in_open.php' ?>
+        <?php include __DIR__ . '/sections/IndexOpen.php' ?>
         
 
         </div>

@@ -7,6 +7,9 @@ use src\Models\Pieces\Motivo;
 
 class PiecesRepository extends QueryRepository
 {
+
+    ################# motivo ####################
+
     public function createMotive(string $data): bool
     {
         try {
@@ -69,6 +72,8 @@ class PiecesRepository extends QueryRepository
         }
     }
 
+    ################# tipo vidro ####################
+
     public function createGlass(string $nomeGlass): bool
     {
         try {
@@ -126,6 +131,19 @@ class PiecesRepository extends QueryRepository
             // Log the error message for debugging purposes
             error_log("Database error: " . $e->getMessage());
             return false;
+        }
+    }
+
+    ################## espessuras ####################
+    public function getAllEspessuras(): array
+    {
+        try {
+            $stmt = $this->select('espessura', '*', '', '', '', true);
+            return $stmt;
+        } catch (PDOException $e) {
+            // Log the error message for debugging purposes
+            error_log("Database error: " . $e->getMessage());
+            return [];
         }
     }
 
