@@ -8,8 +8,8 @@ $optionsVidro = array_column($tipo_vidro, 'tipo_vidro', 'unique_id');
 $motivos = $piecesRepository->getAllMotives();
 $optionsMotivo = array_column($motivos, 'motivo', 'unique_id');
 
-$espessuras = $piecesRepository->getAllEspessuras();
-$optionsEspessuras = array_column($espessuras, 'tam_espessura', 'unique_id');
+    $espessuras = $piecesRepository->getAllEspessuras();
+    $optionsEspessuras = array_column($espessuras, 'tam_espessura', 'id_espessura');
 
 $clientes = $CustomerRepository->getAllCustomers();
 $optionsClientes = [];
@@ -17,33 +17,31 @@ foreach ($clientes as $cliente) {
     $optionsClientes[$cliente->getUniqueId()] = $cliente->getNameCliente();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro_reposicao'])) {
-    $numero_peca = $_POST['numero_peca'];
-    $pedido_cliente = $_POST['pedido_cliente'];
-    $nome_cliente = $_POST['nome_cliente'];
-    $numero_pedido = $_POST['numero_pedido'];
-    $motivo_id = $_POST['motivo_id'];
-    $vidro_id = $_POST['vidro_id'];
-    $espessura_id = $_POST['espessura_id'];
-    $altura_largura = $_POST['altura_largura'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastro_reposicao'])) {
+        $numero_peca = $_POST['numero_peca'];
+        $pedido_cliente = $_POST['pedido_cliente'];
+        $cliente_id = $_POST['cliente_id']; // uuid
+        $numero_pedido = $_POST['numero_pedido'];
+        $motivo_id = $_POST['motivo_id']; // uuid
+        $vidro_id = $_POST['vidro_id']; // uuid
+        $espessura_id = $_POST['espessura_id']; // id
+        $altura_largura = $_POST['altura_largura'];
 
-    // Chamar a função para criar a peça
-    $teste = $piecesRepository->createPiece([
-        'numero_peca' => $numero_peca,
-        'pedido_cliente' => $pedido_cliente,
-        'nome_cliente' => $nome_cliente,
-        'numero_pedido' => $numero_pedido,
-        'motivo_id' => $motivo_id,
-        'vidro_id' => $vidro_id,
-        'espessura_id' => $espessura_id,
-        'altura_largura' => $altura_largura
-    ]);
+        // Chamar a função para criar a peça
+        $teste = $piecesRepository->createPiece([
+            'numero_peca' => $numero_peca,
+            'pedido_cliente' => $pedido_cliente,
+            'cliente_id' => $cliente_id,
+            'numero_pedido' => $numero_pedido,
+            'motivo_id' => $motivo_id,
+            'vidro_id' => $vidro_id,
+            'espessura_id' => $espessura_id,
+            'altura_largura' => $altura_largura
+        ]);
 
-    $config->alerta_toast("Peça cadastrada com sucesso!", 1);
-}else{
-    $config->alerta_toast("Erro ao cadastrar peça.",0);
-}
-
+        var_dump($teste);
+        //$config->alerta_toast("Peça cadastrada com sucesso!", 1);
+    }
 ?>
 
 <div class="flex flex-col grow kt-scrollable-y-auto lg:[--kt-scrollbar-width:auto] bg-white ">
@@ -81,8 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro_reposicao'])
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("nome_cliente", "Cliente", "kt-form-label pb-2 required"); ?>
-                                <?php echo $forms->inputSelect("nome_cliente", "nome_cliente", $optionsClientes, "", true) ?>
+                                <?php echo $forms->label("cliente_id", "Cliente", "kt-form-label pb-2 required"); ?>
+                                <?php echo $forms->inputSelect("cliente_id", "cliente_id", $optionsClientes, "", true) ?>
                             </div>
 
                             <div class="flex flex-col gap-2">
@@ -114,10 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro_reposicao'])
                             <!-- adicionar campo de observações -->
 
                             <div class="flex justify-end pt-2">
+                                <!-- input hidden devido a máscara em js -->
+                                <?php echo $forms->input("hidden", "cadastro_reposicao", "cadastro_reposicao", "1") ?>
                                 <?php echo $forms->button(
                                     "submit",
-                                    "registro_reposicao",
-                                    "registro_reposicao",
+                                    "cadastro_reposicao",
+                                    "cadastro_reposicao",
                                     "button menu-button permissions kt-btn kt-btn-sm rounded-full",
                                     "ki-outline ki-cloud-add",
                                     "CADASTRAR"
@@ -160,20 +160,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registro_reposicao'])
     // Adicionando máscara para o campo de dimensões
 
     document.addEventListener("DOMContentLoaded", function() {
-        const form = document.querySelector("form");
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
+    const form = document.querySelector("form");
+    
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
 
-            const alturaLarguraInput = document.getElementById("altura_largura");
-            const alturaLarguraValue = alturaLarguraInput.value.trim();
+        const alturaLarguraInput = document.getElementById("altura_largura");
+        const alturaLarguraValue = alturaLarguraInput.value.trim();
 
-            const regex = /^\d+X\d+$/;
-            if (!regex.test(alturaLarguraValue)) {
-                alert("Por favor, insira a Altura X Largura no formato correto (ex: 1234X5678).");
-                return;
-            }
+        const regex = /^\d+X\d+$/;
+        if (!regex.test(alturaLarguraValue)) {
+            alert("Por favor, insira a Altura X Largura no formato correto (ex: 1234X5678).");
+            return;
+        }
 
-            form.submit();
-        });
+        form.submit();
     });
+});
 </script>
