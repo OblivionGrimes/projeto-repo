@@ -9,7 +9,6 @@
         $nome_cliente = $config->sanitize($_POST['nome_cliente']);
         $cnpj = $config->sanitize($_POST['cnpj']);
         $unique_id = base64_decode($_POST['unique_id']);
-        $status = $_POST['BT_STATUS'];
         $gm_status = $_POST['BT_GM_STATUS'];
 
         $result = $CustomerRepository->editCustomer([
@@ -17,7 +16,6 @@
             'contato_cliente' => $contato_cliente,
             'nome_cliente' => $nome_cliente,
             'cnpj_cliente' => $cnpj,
-            'status_cliente' => $status,
             'gm_cliente' => $gm_status,
             'unique_id' => $unique_id
         ]);
@@ -30,6 +28,7 @@
         } else {
             $config->alerta_toast("Ocorreu um erro ao editar o cliente.", 2);
         }
+        echo $gm_status;
 
     }
 
