@@ -45,7 +45,7 @@ class QueryRepository extends Database
 
     #-- EX: $this->insert('recovery_keys', 'key_recover, email', "{$codigo}| {$email}")
 
-    protected function insert (string $table, string $column, string $values){
+    protected function insert (string $table, string $column, string $values, bool $lastinsert = false){
         
         $total = count(explode(',', $column));
         $interrogacoes = '';
@@ -61,6 +61,12 @@ class QueryRepository extends Database
         $sql = "INSERT INTO ". $table ." ( ". $column ." ) VALUES ( ". $interrogacoes ." )";
 
         $stmt = $this->mysqlConnection->prepare($sql);
+
+        if($lastinsert){
+            $stmt->execute($valuesArray);
+            return $this->mysqlConnection->lastInsertId();
+        }
+
         return $stmt->execute($valuesArray);
 
     }
