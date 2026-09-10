@@ -135,25 +135,23 @@ class Forms {
         </aside>';
     }
 
-    public function input_switch(string $name, string $status, string $nome_status){
-
+    public function input_switch(string $name, string $status, string $nome_status) {
         $checked = $status === $nome_status ? "checked" : "";
+        $novoStatus = $status === $nome_status ? 'não' : 'sim';
 
         return 
         '<input
             type="hidden"
             name="'.$name.'"
-            value= "'.$status.'"
+            id="hidden_'.$name.'"
+            value="'.$status.'"
         >
         <input
             type="checkbox"
             class="kt-switch kt-switch-sm menu-button switch"
             '.$checked.'
-            "onclick="this.form.submit()";
+            onchange="document.getElementById(\'hidden_'.$name.'\').value = this.checked ? \''.$nome_status.'\' : \''.$novoStatus.'\';"
         >';
-        
-        
-
     }
 
 }

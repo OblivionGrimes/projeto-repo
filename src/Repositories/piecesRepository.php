@@ -176,7 +176,7 @@ class PiecesRepository extends QueryRepository
 
             $stmt = $this->insert('peca', 'num_peca, pedido_id, motivo_id, vidro_id, espessura_id, altura_peca, largura_peca', "{$data['numero_peca']} | {$pedido_id} | {$id_motivo} | {$id_vidro} | {$data['espessura_id']} | {$altura} | {$largura}", false);
 
-            return $pedido_id;
+            return $stmt;
             
         } catch (PDOException $e) {
             // Log the error message for debugging purposes

@@ -6,7 +6,7 @@
             O caminho <code class="bg-muted px-2 py-1 rounded">/<?= htmlspecialchars($_GET['url'] ?? '') ?></code> não existe.
         </p>
         <a 
-            href="<?= BASE_URL ?>d/manage/frames/index" 
+            href="<?= BASE_URL ?>d/manage/home/index" 
             class="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors"
         >
             Voltar ao Painel

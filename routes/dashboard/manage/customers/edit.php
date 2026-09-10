@@ -49,11 +49,6 @@
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <?php echo $forms->label("BT_STATUS", "Status cliente", "kt-form-label pb-2"); ?>
-                                <?php echo $forms->input_switch("BT_STATUS" ,$customer->getStatus(), "ativo"); ?>
-                            </div>
-
-                            <div class="flex flex-col gap-2">
                                 <?php echo $forms->label("BT_GM_STATUS", "Faz parte do grupo GM?", "kt-form-label pb-2"); ?>
                                 <?php echo $forms->input_switch("BT_GM_STATUS" ,$customer->getGmCliente(), "sim"); ?>
                             </div>

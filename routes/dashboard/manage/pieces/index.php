@@ -2,20 +2,20 @@
 
 <?php
 
-    $tipo_vidro = $piecesRepository->getAllGlass();
-    $optionsVidro = array_column($tipo_vidro, 'tipo_vidro', 'unique_id');
+$tipo_vidro = $piecesRepository->getAllGlass();
+$optionsVidro = array_column($tipo_vidro, 'tipo_vidro', 'unique_id');
 
-    $motivos = $piecesRepository->getAllMotives();
-    $optionsMotivo = array_column($motivos, 'motivo', 'unique_id');
+$motivos = $piecesRepository->getAllMotives();
+$optionsMotivo = array_column($motivos, 'motivo', 'unique_id');
 
     $espessuras = $piecesRepository->getAllEspessuras();
     $optionsEspessuras = array_column($espessuras, 'tam_espessura', 'id_espessura');
 
-    $clientes = $CustomerRepository->getAllCustomers();
-    $optionsClientes = [];
-    foreach ($clientes as $cliente) {
-        $optionsClientes[$cliente->getUniqueId()] = $cliente->getNameCliente();
-    }
+$clientes = $CustomerRepository->getAllCustomers();
+$optionsClientes = [];
+foreach ($clientes as $cliente) {
+    $optionsClientes[$cliente->getUniqueId()] = $cliente->getNameCliente();
+}
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastro_reposicao'])) {
         $numero_peca = $_POST['numero_peca'];
@@ -28,7 +28,7 @@
         $altura_largura = $_POST['altura_largura'];
 
         // Chamar a função para criar a peça
-        $teste = $piecesRepository->createPiece([
+        $result = $piecesRepository->createPiece([
             'numero_peca' => $numero_peca,
             'pedido_cliente' => $pedido_cliente,
             'cliente_id' => $cliente_id,
@@ -39,8 +39,14 @@
             'altura_largura' => $altura_largura
         ]);
 
-        var_dump($teste);
-        //$config->alerta_toast("Peça cadastrada com sucesso!", 1);
+        if ($result === true) {
+            $config->alerta_toast("Peça cadastrada com sucesso!", 1);
+            echo $config->reloading('d/manage/home/index'); // recarrega a pagina
+        } elseif ($result === null) {
+            $config->alerta_toast("O número da peça informado já está cadastrado.", 2);
+        } else {
+            $config->alerta_toast("Ocorreu um erro ao cadastrar a peça.", 2);
+        }
     }
 ?>
 

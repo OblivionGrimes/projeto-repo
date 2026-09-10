@@ -113,17 +113,17 @@ class Config {
 
     // Função para recarregar a pagina
     public function reloading(string $url = '') {
-        $url = $url ?: BASE_URL . 'd/manage/admin/index';
+        $url = empty($url) ? BASE_URL . 'd/manage/admin/index': BASE_URL . $url;
 
         return <<<HTML
-    <script>
-        setTimeout(() => {
-            if (window.parent) {
-                window.parent.location.href = "{$url}";
-            }
-        }, 800);
-    </script>
-    HTML;
+        <script>
+            setTimeout(() => {
+                if (window.parent) {
+                    window.parent.location.href = "{$url}";
+                }
+            }, 800);
+        </script>
+        HTML;
     }
 
     // Função para gerar o codigo de verificação
